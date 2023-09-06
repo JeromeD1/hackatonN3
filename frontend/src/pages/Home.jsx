@@ -1,23 +1,51 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
+// import axios from "axios"
+import "./Home.scss"
+import { cities } from "../assets/variables/cities"
 
 export default function Home() {
-  const [characters, setCharacters] = useState([])
+  const [mounted, setMounted] = useState(false)
+  const [map, setMap] = useState(null)
+  const [citySelected, setCitySelected] = useState(cities[20])
+  let L
+
+  const handleChangeCity = (e) => {
+    const newCitySelected = cities.filter(
+      (city) => city.city === e.target.value
+    )[0]
+    setCitySelected(newCitySelected)
+    map.flyTo([newCitySelected.lat, newCitySelected.lng], 10)
+  }
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4242/characters")
-      .then((res) => setCharacters(res.data))
+    setMounted(true)
   }, [])
 
+  useEffect(() => {
+    if (mounted) {
+      const mapInstance = L.map("map").setView(
+        [citySelected.lat, citySelected.lng],
+        10
+      )
+      setMap(mapInstance)
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(mapInstance)
+    }
+  }, [mounted])
+
   return (
-    <header className="App-header">
-      {characters.map((character) => (
-        <>
-          <img src={character.imgUrl} alt={character.name} />
-          <p>{character.firstname}</p>
-        </>
-      ))}
-    </header>
+    <main className="main-home">
+      <div id="map"></div>
+
+      <select value={citySelected.city} onChange={handleChangeCity}>
+        {cities.map((city) => (
+          <option key={city.city}>{city.city}</option>
+        ))}
+      </select>
+    </main>
   )
 }

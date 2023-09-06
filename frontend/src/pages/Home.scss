@@ -1,0 +1,15 @@
+.main-home {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+
+  #map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    z-index: -1;
+    top: 0;
+    left: 0;
+  }
+}
