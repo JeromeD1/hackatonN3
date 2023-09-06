@@ -79,6 +79,12 @@ const events = [
     lat: 48.75,
     lng: 1.9,
   },
+  {
+    type: "radioactivite",
+    icone: iconRadioactivite,
+    lat: 49,
+    lng: 1.9,
+  },
 ]
 
 export default function Home() {
@@ -122,22 +128,13 @@ export default function Home() {
           '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(mapInstance)
 
-      events.map((item) =>
+      const newMarkers = events.map((item) =>
         L.marker([item.lat, item.lng], {
           icon: item.icone,
         }).addTo(mapInstance)
       )
-      /// ///////////////
-      // events.map((item) => {
-      //   // const marker = L.marker([item.lat, item.lng], {
-      //   //   icon: item.icone,
-      //   // }).addTo(mapInstance)
-      //   L.marker([item.lat, item.lng], {
-      //     icon: item.icone,
-      //   }).addTo(mapInstance)
-      // })
-      /// /////////////////
-      // let marker = L.marker([48.8566, 2.3522],{icon:iconTornade} ).addTo(mapInstance);
+
+      setMarkers(newMarkers)
     }
   }, [mounted])
 
@@ -145,14 +142,6 @@ export default function Home() {
     const eventsSelected = filtersEvent
       .map((filter) => (filter.selected ? filter.type : null))
       .filter((item) => item !== null)
-
-    // events.map((item) => {
-    //   if(eventsSelected.includes(item.type)) {
-    //     let marker = L.marker([item.lat, item.lng],{icon:item.icone} ).addTo(map);
-    //   } else {
-
-    //   }
-    // })
 
     // Supprimer tous les marqueurs existants de la carte
     markers.forEach((marker) => marker.remove())
