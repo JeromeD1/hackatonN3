@@ -5,6 +5,7 @@ import MyContext from "./components/MyContext"
 import Home from "./pages/Home"
 
 import "./App.css"
+import BottomInfoPanel from "./components/BottomInfoPanel"
 
 function App() {
   const [user, setUser] = useState({}) // A REMPLACER PAR LE STATE VOULU
@@ -27,10 +28,9 @@ function App() {
       <MyContext.Provider value={valeursFourniesDansMyContextProvider}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/bottompanel" element={<BottomInfoPanel />} />
         </Routes>
       </MyContext.Provider>
-
-      <p>coucou</p>
     </div>
   )
 }

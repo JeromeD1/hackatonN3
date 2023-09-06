@@ -69,7 +69,6 @@ const cities = [
   { city: "Nottingham", lat: 52.9548, lng: -1.1581 },
   { city: "Nuremberg", lat: 49.4521, lng: 11.0767 },
   { city: "Oviedo", lat: 43.3619, lng: -5.8494 },
-  { city: "Palermo", lat: 38.1157, lng: 13.3615 },
   { city: "Palerme", lat: 38.1157, lng: 13.3615 },
   { city: "Pampelune", lat: 42.8185, lng: -1.6442 },
   { city: "Porto", lat: 41.1579, lng: -8.6291 },
