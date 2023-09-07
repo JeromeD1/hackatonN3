@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom"
 import { useState, useMemo, useEffect } from "react"
 import MyContext from "./components/MyContext"
 
-
 import Home from "./pages/Home"
 
 import "./App.css"
