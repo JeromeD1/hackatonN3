@@ -7,15 +7,15 @@ import teteEclaire from "../assets/teteEclaire.png"
 import cloche from "../assets/cloche.png"
 
 function NavBar() {
-  const speak = (text) => {
-    const msg = new SpeechSynthesisUtterance(text)
-    window.speechSynthesis.speak(msg)
-  }
+  // const speak = (text) => {
+  //   const msg = new SpeechSynthesisUtterance(text)
+  //   window.speechSynthesis.speak(msg)
+  // }
 
-  const imageAlt = document
-    .querySelector(".astrolabe-icon img")
-    .getAttribute("alt")
-  speak(imageAlt)
+  // const imageAlt = document
+  //   .querySelector(".astrolabe-icon img")
+  //   .getAttribute("alt")
+  // speak(imageAlt)
   return (
     <div className="navBar">
       <ul>
