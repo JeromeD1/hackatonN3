@@ -10,12 +10,12 @@ import parking from "../images/parking.png"
 
 const iconBatiment = L.icon({
   iconUrl: batiment,
-  iconSize: [80, 120],
+  iconSize: [30, 45],
 })
 
 const iconParking = L.icon({
   iconUrl: parking,
-  iconSize: [80, 120],
+  iconSize: [30, 45],
 })
 
 const iconMontagne = L.icon({
@@ -25,22 +25,22 @@ const iconMontagne = L.icon({
 
 const iconGrotte = L.icon({
   iconUrl: grotte,
-  iconSize: [80, 120],
+  iconSize: [30, 45],
 })
 
 const iconBuilding = L.icon({
   iconUrl: building,
-  iconSize: [80, 120],
+  iconSize: [30, 45],
 })
 
 const iconBunker = L.icon({
   iconUrl: bunker,
-  iconSize: [80, 120],
+  iconSize: [30, 45],
 })
 
 const iconMetro = L.icon({
   iconUrl: metro,
-  iconSize: [80, 120],
+  iconSize: [30, 45],
 })
 
 const getRandomInRange = (min, max) => {
@@ -48,7 +48,7 @@ const getRandomInRange = (min, max) => {
 }
 
 const batiments = []
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 700; i++) {
   batiments.push({
     type: "batiment",
     icone: iconBatiment,
@@ -59,7 +59,7 @@ for (let i = 0; i < 60; i++) {
 }
 
 const parkings = []
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 700; i++) {
   parkings.push({
     type: "parking",
     icone: iconParking,
@@ -70,7 +70,7 @@ for (let i = 0; i < 60; i++) {
 }
 
 const metros = []
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 300; i++) {
   metros.push({
     type: "metro",
     icone: iconMetro,
@@ -92,29 +92,29 @@ for (let i = 0; i < 10; i++) {
 }
 
 const buildings = []
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 700; i++) {
   buildings.push({
     type: "building",
     icone: iconBuilding,
     lat: getRandomInRange(42.5, 51.1),
     lng: getRandomInRange(-4.8, 8.2),
-    events: ["volcan", "tsunami"],
+    events: ["tsunami"],
   })
 }
 
 const grottes = []
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 100; i++) {
   grottes.push({
     type: "grotte",
     icone: iconGrotte,
     lat: getRandomInRange(42.5, 51.1),
     lng: getRandomInRange(-4.8, 8.2),
-    events: ["volcan", "tornade", "meteorite", "radioactivite"],
+    events: ["tornade", "meteorite", "radioactivite"],
   })
 }
 
 const bunkers = []
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 500; i++) {
   bunkers.push({
     type: "bunker",
     icone: iconBunker,
