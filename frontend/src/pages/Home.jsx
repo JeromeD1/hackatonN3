@@ -17,9 +17,12 @@ import { events } from "../assets/variables/events"
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [map, setMap] = useState(null)
-  const [citySelected, setCitySelected] = useState(cities[63])
+  const [citySelected, setCitySelected] = useState(cities[49])
   const [filtersEvent, setFiltersEvent] = useState(filters)
   const [markers, setMarkers] = useState([])
+  // Ajouter un nouvel état pour stocker les coordonnées du point cliqué et du marqueur le plus proche
+  const [clickedPoint, setClickedPoint] = useState(null)
+  const [nearestMarker, setNearestMarker] = useState(null)
 
   const handleChangeCity = (e) => {
     const newCitySelected = cities.filter(
@@ -104,6 +107,33 @@ export default function Home() {
       }
     }
   }, [filtersEvent])
+
+  useEffect(() => {
+    if (map) {
+      // Ajouter un gestionnaire d'événements pour l'événement click de la carte
+      map.on("click", function (e) {
+        // Récupérer les coordonnées du point cliqué
+        const clickedPoint = e.latlng
+        setClickedPoint(clickedPoint)
+        // console.log("clickedPoint",clickedPoint);
+
+        // Calculer la distance entre le point cliqué et chaque marqueur pour trouver le marqueur le plus proche
+        let nearestMarker = null
+        let minDistance = Infinity
+        markers.forEach((marker) => {
+          const distance = clickedPoint.distanceTo(marker.getLatLng())
+          if (distance < minDistance) {
+            minDistance = distance
+            nearestMarker = marker
+          }
+        })
+
+        // Mettre à jour l'état avec les coordonnées du marqueur le plus proche
+        setNearestMarker(nearestMarker ? nearestMarker.getLatLng() : null)
+        // console.log("nearestMarker",nearestMarker.getLatLng());
+      })
+    }
+  }, [map, markers])
 
   return (
     <main className="main-home">
