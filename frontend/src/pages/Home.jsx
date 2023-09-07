@@ -1,6 +1,7 @@
 /* global L */
 import { useState, useEffect, useRef } from "react"
 // import axios from "axios"
+import PopUp from "../components/PopUp"
 import "./Home.scss"
 import {
   shelters,
@@ -213,8 +214,8 @@ export default function Home() {
 
   return (
     <main className="main-home">
+      <PopUp />
       <div id="map"></div>
-
       <section className="section-citySelect">
         <select value={citySelected.city} onChange={handleChangeCity}>
           {cities
