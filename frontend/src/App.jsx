@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import { useState, useMemo, useEffect } from "react"
 import MyContext from "./components/MyContext"
-
+import NavBar from "./components/navBar"
 import Home from "./pages/Home"
 
 import "./App.css"
@@ -25,6 +25,7 @@ function App() {
   return (
     <div className="App">
       <MyContext.Provider value={valeursFourniesDansMyContextProvider}>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
