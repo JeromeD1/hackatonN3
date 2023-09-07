@@ -1,36 +1,33 @@
-input{
+input {
   border-radius: 50px;
-  border:none;
+  border: none;
 }
 
-button{
-  border-radius:50px;
-  border:none;
+button {
+  border-radius: 50px;
+  border: none;
 }
 
 .part1 {
-	margin-top: 15%;
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	gap: 6%;
-
+  margin-top: 15%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 6%;
 }
 
-.part2{
-	display: flex;
-	flex-wrap: nowrap;
-	margin-bottom: 16px;
-	gap:6%
-
+.part2 {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 16px;
+  gap: 6%;
 }
-.all{
-	display:flex;
-	flex-direction: column;
-	align-items: center;
-
+.all {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.butonsubmit button{
-	font-size: 22px;
+.butonsubmit button {
+  font-size: 22px;
 }
