@@ -76,4 +76,106 @@ const citiesFrance = [
   { id: 75, city: "Saint-Étienne", lat: 45.4397, lng: 4.3872 },
 ]
 
-export { citiesFrance }
+const sentencesBFMTV = [
+  {
+    id: 1,
+    event: "Attention : Une petite tornade est en cours près de la ville de ",
+  },
+  {
+    id: 2,
+    event: "Attention : Une  tornade est en cours près de la ville de ",
+  },
+  {
+    id: 3,
+    event: "Prudence : Une grosse tornade est en cours près de la ville de ",
+  },
+  {
+    id: 4,
+    event:
+      "Grande prudence : Une tornade anormalement puissante est en cours près de la ville de ",
+  },
+  {
+    id: 5,
+    event:
+      "Attention : Un tremblement de Terre de 7 sur l'echelle de Richer a eu lieu près de la ville de ",
+  },
+  {
+    id: 6,
+    event:
+      "Attention : Un tremblement de Terre de 8 sur l'echelle de Richer a eu lieu près de la ville de ",
+  },
+  {
+    id: 7,
+    event:
+      "Attention : Un tremblement de Terre de 10 sur l'echelle de Richer a eu lieu près de la ville de ",
+  },
+  {
+    id: 8,
+    event:
+      "Attention : Un tremblement de Terre de 11 sur l'echelle de Richer a eu lieu près de la ville de ",
+  },
+  {
+    id: 9,
+    event:
+      "Attention : Un tremblement de Terre de 12 sur l'echelle de Richer a eu lieu près de la ville de ",
+  },
+  {
+    id: 10,
+    event: "Prudence : Un incendie ravage les alentours de la ville de ",
+  },
+  {
+    id: 11,
+    event:
+      "Grande prudence : Un nuage radiactif intense menace la region vers la ville de ",
+  },
+  {
+    id: 12,
+    event:
+      "Attention : Une pluie acide est prévue d'ici une heure sur la ville de ",
+  },
+  {
+    id: 13,
+    event:
+      "Attention : Une pluie acide est prévue d'ici deux heures sur la ville de ",
+  },
+  {
+    id: 14,
+    event:
+      "Prudence : Une tornade est redoutée dans la journée près de la ville de ",
+  },
+  {
+    id: 15,
+    event:
+      "Grande prudence : Une grosse tornade est redoutée dans la journée près de la ville de ",
+  },
+  {
+    id: 16,
+    event: "Attention : Une tornade a ravagée une partie de la ville de ",
+  },
+  {
+    id: 17,
+    event:
+      "Attention : Une grosse tornade a ravagée une partie de la region et de la ville de ",
+  },
+  {
+    id: 18,
+    event:
+      "Prudence : Une tempete magnétique est attendue dans l'après-midi près de la ville de ",
+  },
+  {
+    id: 19,
+    event: "Attention : Une innondation paralyse la ville de ",
+  },
+  {
+    id: 20,
+    event:
+      "Prudence : Un cyclone balaie la cote atlantique, notament la ville de  ",
+  },
+  {
+    id: 21,
+    event:
+      "Grande prudence : Des castors mutants, qui crache de l'acide par les yeux, attaquent la ville de  ",
+  },
+]
+
+export { citiesFrance, sentencesBFMTV }
