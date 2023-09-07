@@ -10,7 +10,6 @@ class UsersManager extends AbstractManager {
       `insert into ${this.table} (firstname, lastname, emails, phone, coordXusers, coordYusers) values (?, ?, ?, ?, ?, ?)`,
       [
         users.firstname,
-        users.firstname,
         users.lastname,
         users.emails,
         users.phone,
