@@ -14,7 +14,7 @@ function PopUp() {
   }
 
   return (
-    <>
+    <div className="popup">
       {showModal && (
         <div className="modal-wrapper">
           <div className="modal">
@@ -42,7 +42,7 @@ function PopUp() {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 export default PopUp

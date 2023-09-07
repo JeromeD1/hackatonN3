@@ -29,8 +29,6 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </MyContext.Provider>
-
-      <p>coucou</p>
     </div>
   )
 }
