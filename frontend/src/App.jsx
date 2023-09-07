@@ -1,8 +1,8 @@
-import { Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { useState, useMemo, useEffect } from "react"
 import MyContext from "./components/MyContext"
-
 import Home from "./pages/Home"
+import ChatBox from "./components/ChatBox"
 
 import "./App.css"
 
@@ -27,16 +27,18 @@ useEffect(() => {
 })
 
   return (
+    <Router>   
     <div className="App">
-
 <MyContext.Provider value={valeursFourniesDansMyContextProvider}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/chat" element={<ChatBox />} />
         </Routes>
       </MyContext.Provider>
       
       <p>coucou</p>
     </div>
+    </Router>
   )
 }
 
