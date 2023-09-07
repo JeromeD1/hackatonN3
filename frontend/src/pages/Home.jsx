@@ -1,107 +1,59 @@
 /* global L */
-
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import IABubbles from "../components/IABubbles"
 
 // import axios from "axios"
+import PopUp from "../components/PopUp"
 import "./Home.scss"
+import {
+  shelters,
+  iconBatiment,
+  iconBuilding,
+  iconBunker,
+  iconGrotte,
+  iconMetro,
+  iconMontagne,
+  iconParking,
+} from "../assets/variables/shelters"
+import {
+  events,
+  iconIncendie,
+  iconMeteorite,
+  iconRadioactivite,
+  iconTornade,
+  iconTsunami,
+  iconVolcan,
+} from "../assets/variables/events"
 import { cities } from "../assets/variables/cities"
 import { filters } from "../assets/variables/filters"
-import tornade from "../assets/images/tornade.png"
-import meteorite from "../assets/images/meteorite.png"
-import volcan from "../assets/images/volcan.png"
-import incendie from "../assets/images/incendie.png"
-import tsunami from "../assets/images/tsunami.png"
-import radioactivite from "../assets/images/radioactivite.png"
-
-const iconTornade = L.icon({
-  iconUrl: tornade,
-  iconSize: [80, 120],
-})
-
-const iconMeteorite = L.icon({
-  iconUrl: meteorite,
-  iconSize: [120, 120],
-})
-
-const iconVolcan = L.icon({
-  iconUrl: volcan,
-  iconSize: [80, 120],
-})
-
-const iconIncendie = L.icon({
-  iconUrl: incendie,
-  iconSize: [80, 100],
-})
-
-const iconTsunami = L.icon({
-  iconUrl: tsunami,
-  iconSize: [100, 100],
-})
-
-const iconRadioactivite = L.icon({
-  iconUrl: radioactivite,
-  iconSize: [80, 80],
-})
-
-const events = [
-  { type: "tornade", icone: iconTornade, lat: 48.8566, lng: 2.35 },
-  { type: "meteorite", icone: iconMeteorite, lat: 49.0, lng: 2.0 },
-  { type: "volcan", icone: iconVolcan, lat: 48.5, lng: 1.5 },
-  { type: "incendie", icone: iconIncendie, lat: 49.1, lng: 2.45 },
-  { type: "tsunami", icone: iconTsunami, lat: 48.5, lng: 2.5 },
-  { type: "radioactivite", icone: iconRadioactivite, lat: 48.75, lng: 1.9 },
-  { type: "tornade", icone: iconTornade, lat: 43.2965, lng: 5.3698 },
-  { type: "meteorite", icone: iconMeteorite, lat: 45.764, lng: 4.8357 },
-  { type: "volcan", icone: iconVolcan, lat: 44.8378, lng: -0.5792 },
-  { type: "incendie", icone: iconIncendie, lat: 43.6047, lng: 1.4442 },
-  { type: "tsunami", icone: iconTsunami, lat: 47.2184, lng: -1.5536 },
-  {
-    type: "radioactivite",
-    icone: iconRadioactivite,
-    lat: 48.1173,
-    lng: -1.6778,
-  },
-  { type: "tornade", icone: iconTornade, lat: 49.4944, lng: 0.1079 },
-  { type: "meteorite", icone: iconMeteorite, lat: 50.9513, lng: 1.8587 },
-  { type: "tornade", icone: iconTornade, lat: 45.1885, lng: 5.7245 },
-  { type: "meteorite", icone: iconMeteorite, lat: 47.3216, lng: 5.0415 },
-  { type: "volcan", icone: iconVolcan, lat: 43.6108, lng: 3.8767 },
-  { type: "incendie", icone: iconIncendie, lat: 43.1242, lng: 6.1286 },
-  { type: "tsunami", icone: iconTsunami, lat: 43.7009, lng: 7.2684 },
-  {
-    type: "radioactivite",
-    icone: iconRadioactivite,
-    lat: 49.2583,
-    lng: 4.0317,
-  },
-  { type: "tornade", icone: iconTornade, lat: 47.7508, lng: 7.3359 },
-  { type: "meteorite", icone: iconMeteorite, lat: 48.6921, lng: 6.1844 },
-  { type: "volcan", icone: iconVolcan, lat: 49.1193, lng: 6.1757 },
-  { type: "incendie", icone: iconIncendie, lat: 48.5839, lng: 7.7455 },
-  { type: "tornade", icone: iconTornade, lat: 48.3904, lng: -4.4861 },
-  { type: "meteorite", icone: iconMeteorite, lat: 47.9029, lng: 1.909 },
-  { type: "volcan", icone: iconVolcan, lat: 48.1173, lng: -1.6778 },
-  { type: "incendie", icone: iconIncendie, lat: 49.4944, lng: 0.1079 },
-  { type: "tsunami", icone: iconTsunami, lat: 50.9513, lng: 1.8587 },
-  {
-    type: "radioactivite",
-    icone: iconRadioactivite,
-    lat: 43.8374,
-    lng: -2.2192,
-  },
-  { type: "tornade", icone: iconTornade, lat: 43.2965, lng: 5.3698 },
-  { type: "meteorite", icone: iconMeteorite, lat: 43.1242, lng: 6.1286 },
-  { type: "volcan", icone: iconVolcan, lat: 43.7009, lng: 7.2684 },
-  { type: "incendie", icone: iconIncendie, lat: 43.6108, lng: 3.8767 },
-]
+import { fshelters } from "../assets/variables/fshelters"
+import building from "../assets/images/building.png"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [map, setMap] = useState(null)
-  const [citySelected, setCitySelected] = useState(cities[63])
+  const [citySelected, setCitySelected] = useState(cities[49])
   const [filtersEvent, setFiltersEvent] = useState(filters)
   const [markers, setMarkers] = useState([])
+  const roadsRef = useRef([])
+  const [roads, setRoads] = useState([])
+  // Ajouter un nouvel état pour stocker les coordonnées du point cliqué et du marqueur le plus proche
+  const [clickedPoint, setClickedPoint] = useState(null)
+  const [nearestMarker, setNearestMarker] = useState(null)
+  const [FiltersShelter, setFiltersShelter] = useState(shelters)
+  const [showShelters, setShowShelters] = useState(false)
+  const [markersShelter, setMarkersShelter] = useState([])
+  const [shake, setShake] = useState(false)
+  const shelterRef = useRef([])
+
+  const triggerShake = () => {
+    setShake(true)
+    setTimeout(() => setShake(false), 500) // Reset after 0.5s
+  }
+
+  const handleClickButtonShelters = () => {
+    setShowShelters(!showShelters)
+  }
 
   const handleChangeCity = (e) => {
     const newCitySelected = cities.filter(
@@ -117,6 +69,21 @@ export default function Home() {
         item.id === id ? { ...item, selected: !item.selected } : item
       )
     )
+    const filteredEvents = filtersEvent
+      .map((item) =>
+        item.id === id ? { ...item, selected: !item.selected } : item
+      )
+      .filter((event) => event.selected === true)
+      .map((item) => item.type)
+
+    if (filteredEvents.length === 0) {
+      setFiltersShelter(shelters)
+    } else {
+      const newShelters = FiltersShelter.filter((item) =>
+        item.events.some((event) => filteredEvents.includes(event))
+      )
+      setFiltersShelter(newShelters)
+    }
   }
 
   useEffect(() => {
@@ -142,6 +109,16 @@ export default function Home() {
           icon: item.icone,
         }).addTo(mapInstance)
       )
+
+      // const newMarkers = events.map((item) =>
+      //   {
+      //    let mark= L.marker([item.lat, item.lng], {
+      //     icon: item.icone,
+      //   }).addTo(mapInstance)
+
+      //   mark.bindTooltip('Texte à afficher').openTooltip();
+      // }
+      // )
 
       setMarkers(newMarkers)
     }
@@ -177,36 +154,126 @@ export default function Home() {
     }
   }, [filtersEvent])
 
+  useEffect(() => {
+    if (map) {
+      // Ajouter un gestionnaire d'événements pour l'événement click de la carte
+      map.on("click", function (e) {
+        // Récupérer les coordonnées du point cliqué
+        const clickedPoint = e.latlng
+        setClickedPoint(clickedPoint)
+        // console.log("clickedPoint",clickedPoint);
+
+        // Calculer la distance entre le point cliqué et chaque marqueur pour trouver le marqueur le plus proche
+        let nearestMarker = null
+        let minDistance = Infinity
+        shelterRef.current.forEach((marker) => {
+          const distance = clickedPoint.distanceTo(marker.getLatLng())
+          if (distance < minDistance) {
+            minDistance = distance
+            nearestMarker = marker
+          }
+        })
+
+        // Mettre à jour l'état avec les coordonnées du marqueur le plus proche
+        setNearestMarker(nearestMarker ? nearestMarker.getLatLng() : null)
+        // console.log("nearestMarker",nearestMarker.getLatLng());
+
+        if (nearestMarker) {
+          const waypoints = [
+            [clickedPoint.lat, clickedPoint.lng],
+            [nearestMarker.getLatLng().lat, nearestMarker.getLatLng().lng],
+          ]
+
+          // suppression des routes existantes
+          roadsRef.current.forEach((road) => road.remove())
+          // Créer un polyline avec les points de passage
+          const route = L.polyline(waypoints, { color: "red" }).addTo(map)
+          // Ajuster la vue de la carte pour afficher la route
+          // map.fitBounds(route.getBounds());
+
+          setRoads([route])
+        }
+      })
+    }
+  }, [map, markers])
+
+  useEffect(() => {
+    roadsRef.current = roads
+  }, [roads])
+
+  useEffect(() => {
+    if (showShelters) {
+      const newShelters = FiltersShelter.map((item) =>
+        L.marker([item.lat, item.lng], {
+          icon: item.icone,
+        }).addTo(map)
+      )
+      // Mise à jour de l'état des marqueurs
+      setMarkersShelter(newShelters)
+    } else {
+      markersShelter.forEach((marker) => marker.remove())
+      setMarkersShelter([])
+    }
+  }, [showShelters])
+
+  useEffect(() => {
+    shelterRef.current = markersShelter
+  }, [markersShelter])
+
   return (
-    <main className="main-home">
-      <div id="map"></div>
+    <div className={`home-container ${shake ? "shake-animation" : ""}`}>
+      <main className="main-home">
+        <PopUp />
+        <div id="map"></div>
+        <section className="section-citySelect">
+          <select value={citySelected.city} onChange={handleChangeCity}>
+            {cities
+              .sort((a, b) => a.city.localeCompare(b.city))
+              .map((city) => (
+                <option key={city.city}>{city.city}</option>
+              ))}
+          </select>
+        </section>
 
-      <section className="section-citySelect">
-        <select value={citySelected.city} onChange={handleChangeCity}>
-          {cities
-            .sort((a, b) => a.city.localeCompare(b.city))
-            .map((city) => (
-              <option key={city.city}>{city.city}</option>
+        <section className="filtersMap">
+          <div className="filtersRowEvent">
+            {filtersEvent.map((filter) => (
+              <button
+                key={filter.id}
+                style={
+                  filter.selected
+                    ? {
+                        bottom: "-20px",
+                        animation: "effetLumiere 0.7s ease-in-out infinite",
+                      }
+                    : null
+                }
+                onClick={() => handleClickFilterEvent(filter.id)}
+              >
+                <img src={filter.image} alt={filter.type} />
+              </button>
             ))}
-        </select>
-      </section>
-
-      <section className="section-filterEvent">
-        {filtersEvent.map((filter) => (
-          <img
-            src={filter.image}
-            alt={filter.type}
-            key={filter.id}
-            style={
-              filter.selected ? { boxShadow: "0px 0px 20px 3px blue" } : null
-            }
-            onClick={() => handleClickFilterEvent(filter.id)}
+          </div>
+          <div className="section-filterShelter">
+            <button onClick={handleClickButtonShelters}>
+              <img
+                src={building}
+                alt="afficher les abris"
+                title="Afficher les abris"
+              />
+            </button>
+          </div>
+        </section>
+        <div className="IABubbles">
+          <IABubbles
+            onEnterPress={(message) => {
+              if (message && message.startsWith("Attention!")) {
+                triggerShake()
+              }
+            }}
           />
-        ))}
-      </section>
-      <section>
-        <IABubbles />
-      </section>
-    </main>
+        </div>
+      </main>
+    </div>
   )
 }
