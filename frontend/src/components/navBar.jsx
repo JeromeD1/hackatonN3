@@ -8,7 +8,7 @@ import cloche from "../assets/cloche.png"
 
 function NavBar() {
   const speak = (text) => {
-    var msg = new SpeechSynthesisUtterance(text)
+    const msg = new SpeechSynthesisUtterance(text)
     window.speechSynthesis.speak(msg)
   }
 
