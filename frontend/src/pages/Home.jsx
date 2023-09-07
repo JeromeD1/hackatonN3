@@ -1,3 +1,4 @@
+/* global L */
 import { useState, useEffect } from "react"
 // import axios from "axios"
 import "./Home.scss"
@@ -7,7 +8,8 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [map, setMap] = useState(null)
   const [citySelected, setCitySelected] = useState(cities[20])
-  let L
+
+  // let L
 
   const handleChangeCity = (e) => {
     const newCitySelected = cities.filter(
@@ -40,7 +42,6 @@ export default function Home() {
   return (
     <main className="main-home">
       <div id="map"></div>
-
       <select value={citySelected.city} onChange={handleChangeCity}>
         {cities.map((city) => (
           <option key={city.city}>{city.city}</option>
