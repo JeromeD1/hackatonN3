@@ -55,6 +55,9 @@ export default function Home() {
   }
 
   const handleClickFilterEvent = (id) => {
+    // suppression des routes existantes
+    roadsRef.current.forEach((road) => road.remove())
+
     setFiltersEvent((prevstate) =>
       prevstate.map((item) =>
         item.id === id ? { ...item, selected: !item.selected } : item
@@ -70,7 +73,7 @@ export default function Home() {
     if (filteredEvents.length === 0) {
       setFiltersShelter(shelters)
     } else {
-      const newShelters = FiltersShelter.filter((item) =>
+      const newShelters = shelters.filter((item) =>
         item.events.some((event) => filteredEvents.includes(event))
       )
       setFiltersShelter(newShelters)
@@ -100,16 +103,6 @@ export default function Home() {
           icon: item.icone,
         }).addTo(mapInstance)
       )
-
-      // const newMarkers = events.map((item) =>
-      //   {
-      //    let mark= L.marker([item.lat, item.lng], {
-      //     icon: item.icone,
-      //   }).addTo(mapInstance)
-
-      //   mark.bindTooltip('Texte à afficher').openTooltip();
-      // }
-      // )
 
       setMarkers(newMarkers)
     }
@@ -149,6 +142,10 @@ export default function Home() {
     if (map) {
       // Ajouter un gestionnaire d'événements pour l'événement click de la carte
       map.on("click", function (e) {
+        // suppression des routes existantes
+        roadsRef.current.forEach((road) => road.remove())
+        setRoads([])
+
         // Récupérer les coordonnées du point cliqué
         const clickedPoint = e.latlng
         setClickedPoint(clickedPoint)
@@ -175,14 +172,13 @@ export default function Home() {
             [nearestMarker.getLatLng().lat, nearestMarker.getLatLng().lng],
           ]
 
-          // suppression des routes existantes
-          roadsRef.current.forEach((road) => road.remove())
           // Créer un polyline avec les points de passage
           const route = L.polyline(waypoints, { color: "red" }).addTo(map)
           // Ajuster la vue de la carte pour afficher la route
           // map.fitBounds(route.getBounds());
 
-          setRoads([route])
+          // setRoads([route])
+          setRoads((prevRoads) => [...prevRoads, route])
         }
       })
     }
@@ -194,6 +190,8 @@ export default function Home() {
 
   useEffect(() => {
     if (showShelters) {
+      markersShelter.forEach((marker) => marker.remove())
+
       const newShelters = FiltersShelter.map((item) =>
         L.marker([item.lat, item.lng], {
           icon: item.icone,
@@ -205,7 +203,7 @@ export default function Home() {
       markersShelter.forEach((marker) => marker.remove())
       setMarkersShelter([])
     }
-  }, [showShelters])
+  }, [showShelters, FiltersShelter, filtersEvent])
 
   useEffect(() => {
     shelterRef.current = markersShelter
