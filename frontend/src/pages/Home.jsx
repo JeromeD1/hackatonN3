@@ -11,6 +11,7 @@ import volcan from "../assets/images/volcan.png"
 import incendie from "../assets/images/incendie.png"
 import tsunami from "../assets/images/tsunami.png"
 import radioactivite from "../assets/images/radioactivite.png"
+import BottomInfoPanel from "../components/BottomInfoPanel"
 
 const iconTornade = L.icon({
   iconUrl: tornade,
@@ -202,6 +203,9 @@ export default function Home() {
           />
         ))}
       </section>
+      <div className="bottomPanel">
+        <BottomInfoPanel />
+      </div>
     </main>
   )
 }
