@@ -176,33 +176,32 @@ export default function Home() {
   }, [filtersEvent])
 
   return (
-    <>
-      <main className="main-home">
-        <PopUp />
-        <div id="map"></div>
-        <section className="section-citySelect">
-          <select value={citySelected.city} onChange={handleChangeCity}>
-            {cities
-              .sort((a, b) => a.city.localeCompare(b.city))
-              .map((city) => (
-                <option key={city.city}>{city.city}</option>
-              ))}
-          </select>
-        </section>
-        <section className="section-filterEvent">
-          {filtersEvent.map((filter) => (
-            <img
-              src={filter.image}
-              alt={filter.type}
-              key={filter.id}
-              style={
-                filter.selected ? { boxShadow: "0px 0px 20px 3px blue" } : null
-              }
-              onClick={() => handleClickFilterEvent(filter.id)}
-            />
-          ))}
-        </section>
-      </main>
-    </>
+    <main className="main-home">
+      <PopUp />
+      <div id="map"></div>
+      <section className="section-citySelect">
+        <select value={citySelected.city} onChange={handleChangeCity}>
+          {cities
+            .sort((a, b) => a.city.localeCompare(b.city))
+            .map((city) => (
+              <option key={city.city}>{city.city}</option>
+            ))}
+        </select>
+      </section>
+
+      <section className="section-filterEvent">
+        {filtersEvent.map((filter) => (
+          <img
+            src={filter.image}
+            alt={filter.type}
+            key={filter.id}
+            style={
+              filter.selected ? { boxShadow: "0px 0px 20px 3px blue" } : null
+            }
+            onClick={() => handleClickFilterEvent(filter.id)}
+          />
+        ))}
+      </section>
+    </main>
   )
 }
