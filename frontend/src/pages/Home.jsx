@@ -1,98 +1,50 @@
-import { useState, useEffect } from "react"
+/* global L */
+import { useState, useEffect, useRef } from "react"
 // import axios from "axios"
 import "./Home.scss"
+import {
+  shelters,
+  iconBatiment,
+  iconBuilding,
+  iconBunker,
+  iconGrotte,
+  iconMetro,
+  iconMontagne,
+  iconParking,
+} from "../assets/variables/shelters"
+import {
+  events,
+  iconIncendie,
+  iconMeteorite,
+  iconRadioactivite,
+  iconTornade,
+  iconTsunami,
+  iconVolcan,
+} from "../assets/variables/events"
 import { cities } from "../assets/variables/cities"
 import { filters } from "../assets/variables/filters"
-import tornade from "../assets/images/tornade.png"
-import meteorite from "../assets/images/meteorite.png"
-import volcan from "../assets/images/volcan.png"
-import incendie from "../assets/images/incendie.png"
-import tsunami from "../assets/images/tsunami.png"
-import radioactivite from "../assets/images/radioactivite.png"
-
-let L // A METTRE EN COMMENTAIRE SINON CA NE FONCTIONNE PAS
-
-const iconTornade = L.icon({
-  iconUrl: tornade,
-  iconSize: [80, 120],
-})
-
-const iconMeteorite = L.icon({
-  iconUrl: meteorite,
-  iconSize: [120, 120],
-})
-
-const iconVolcan = L.icon({
-  iconUrl: volcan,
-  iconSize: [80, 120],
-})
-
-const iconIncendie = L.icon({
-  iconUrl: incendie,
-  iconSize: [80, 100],
-})
-
-const iconTsunami = L.icon({
-  iconUrl: tsunami,
-  iconSize: [100, 100],
-})
-
-const iconRadioactivite = L.icon({
-  iconUrl: radioactivite,
-  iconSize: [80, 80],
-})
-
-const events = [
-  {
-    type: "tornade",
-    icone: iconTornade,
-    lat: 48.8566,
-    lng: 2.35,
-  },
-  {
-    type: "meteorite",
-    icone: iconMeteorite,
-    lat: 49,
-    lng: 2,
-  },
-  {
-    type: "volcan",
-    icone: iconVolcan,
-    lat: 48.5,
-    lng: 1.5,
-  },
-  {
-    type: "incendie",
-    icone: iconIncendie,
-    lat: 49.1,
-    lng: 2.45,
-  },
-  {
-    type: "tsunami",
-    icone: iconTsunami,
-    lat: 48.5,
-    lng: 2.5,
-  },
-  {
-    type: "radioactivite",
-    icone: iconRadioactivite,
-    lat: 48.75,
-    lng: 1.9,
-  },
-  {
-    type: "radioactivite",
-    icone: iconRadioactivite,
-    lat: 49,
-    lng: 1.9,
-  },
-]
+import { fshelters } from "../assets/variables/fshelters"
+import building from "../assets/images/building.png"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [map, setMap] = useState(null)
-  const [citySelected, setCitySelected] = useState(cities[63])
+  const [citySelected, setCitySelected] = useState(cities[49])
   const [filtersEvent, setFiltersEvent] = useState(filters)
   const [markers, setMarkers] = useState([])
+  const roadsRef = useRef([])
+  const [roads, setRoads] = useState([])
+  // Ajouter un nouvel état pour stocker les coordonnées du point cliqué et du marqueur le plus proche
+  const [clickedPoint, setClickedPoint] = useState(null)
+  const [nearestMarker, setNearestMarker] = useState(null)
+  const [FiltersShelter, setFiltersShelter] = useState(shelters)
+  const [showShelters, setShowShelters] = useState(false)
+  const [markersShelter, setMarkersShelter] = useState([])
+  const shelterRef = useRef([])
+
+  const handleClickButtonShelters = () => {
+    setShowShelters(!showShelters)
+  }
 
   const handleChangeCity = (e) => {
     const newCitySelected = cities.filter(
@@ -108,6 +60,21 @@ export default function Home() {
         item.id === id ? { ...item, selected: !item.selected } : item
       )
     )
+    const filteredEvents = filtersEvent
+      .map((item) =>
+        item.id === id ? { ...item, selected: !item.selected } : item
+      )
+      .filter((event) => event.selected === true)
+      .map((item) => item.type)
+
+    if (filteredEvents.length === 0) {
+      setFiltersShelter(shelters)
+    } else {
+      const newShelters = FiltersShelter.filter((item) =>
+        item.events.some((event) => filteredEvents.includes(event))
+      )
+      setFiltersShelter(newShelters)
+    }
   }
 
   useEffect(() => {
@@ -134,28 +101,115 @@ export default function Home() {
         }).addTo(mapInstance)
       )
 
+      // const newMarkers = events.map((item) =>
+      //   {
+      //    let mark= L.marker([item.lat, item.lng], {
+      //     icon: item.icone,
+      //   }).addTo(mapInstance)
+
+      //   mark.bindTooltip('Texte à afficher').openTooltip();
+      // }
+      // )
+
       setMarkers(newMarkers)
     }
   }, [mounted])
 
   useEffect(() => {
-    const eventsSelected = filtersEvent
-      .map((filter) => (filter.selected ? filter.type : null))
-      .filter((item) => item !== null)
+    if (mounted) {
+      const eventsSelected = filtersEvent
+        .map((filter) => (filter.selected ? filter.type : null))
+        .filter((item) => item !== null)
 
-    // Supprimer tous les marqueurs existants de la carte
-    markers.forEach((marker) => marker.remove())
+      // Suppression de tous les marqueurs existants sur la carte
+      markers.forEach((marker) => marker.remove())
 
-    // Créer les nouveaux marqueurs et les ajouter à la carte
-    const newMarkers = events
-      .filter((item) => eventsSelected.includes(item.type))
-      .map((item) =>
-        L.marker([item.lat, item.lng], { icon: item.icone }).addTo(map)
-      )
-
-    // Mettre à jour l'état des marqueurs
-    setMarkers(newMarkers)
+      // Création des nouveaux marqueurs et les ajout à la carte
+      if (eventsSelected.length === 0) {
+        const newMarkers = events.map((item) =>
+          L.marker([item.lat, item.lng], {
+            icon: item.icone,
+          }).addTo(map)
+        )
+        // Mise à jour de l'état des marqueurs
+        setMarkers(newMarkers)
+      } else {
+        const newMarkers = events
+          .filter((item) => eventsSelected.includes(item.type))
+          .map((item) =>
+            L.marker([item.lat, item.lng], { icon: item.icone }).addTo(map)
+          )
+        // Mise à jour de l'état des marqueurs
+        setMarkers(newMarkers)
+      }
+    }
   }, [filtersEvent])
+
+  useEffect(() => {
+    if (map) {
+      // Ajouter un gestionnaire d'événements pour l'événement click de la carte
+      map.on("click", function (e) {
+        // Récupérer les coordonnées du point cliqué
+        const clickedPoint = e.latlng
+        setClickedPoint(clickedPoint)
+        // console.log("clickedPoint",clickedPoint);
+
+        // Calculer la distance entre le point cliqué et chaque marqueur pour trouver le marqueur le plus proche
+        let nearestMarker = null
+        let minDistance = Infinity
+        shelterRef.current.forEach((marker) => {
+          const distance = clickedPoint.distanceTo(marker.getLatLng())
+          if (distance < minDistance) {
+            minDistance = distance
+            nearestMarker = marker
+          }
+        })
+
+        // Mettre à jour l'état avec les coordonnées du marqueur le plus proche
+        setNearestMarker(nearestMarker ? nearestMarker.getLatLng() : null)
+        // console.log("nearestMarker",nearestMarker.getLatLng());
+
+        if (nearestMarker) {
+          const waypoints = [
+            [clickedPoint.lat, clickedPoint.lng],
+            [nearestMarker.getLatLng().lat, nearestMarker.getLatLng().lng],
+          ]
+
+          // suppression des routes existantes
+          roadsRef.current.forEach((road) => road.remove())
+          // Créer un polyline avec les points de passage
+          const route = L.polyline(waypoints, { color: "red" }).addTo(map)
+          // Ajuster la vue de la carte pour afficher la route
+          // map.fitBounds(route.getBounds());
+
+          setRoads([route])
+        }
+      })
+    }
+  }, [map, markers])
+
+  useEffect(() => {
+    roadsRef.current = roads
+  }, [roads])
+
+  useEffect(() => {
+    if (showShelters) {
+      const newShelters = FiltersShelter.map((item) =>
+        L.marker([item.lat, item.lng], {
+          icon: item.icone,
+        }).addTo(map)
+      )
+      // Mise à jour de l'état des marqueurs
+      setMarkersShelter(newShelters)
+    } else {
+      markersShelter.forEach((marker) => marker.remove())
+      setMarkersShelter([])
+    }
+  }, [showShelters])
+
+  useEffect(() => {
+    shelterRef.current = markersShelter
+  }, [markersShelter])
 
   return (
     <main className="main-home">
@@ -171,18 +225,34 @@ export default function Home() {
         </select>
       </section>
 
-      <section className="section-filterEvent">
-        {filtersEvent.map((filter) => (
-          <img
-            src={filter.image}
-            alt={filter.type}
-            key={filter.id}
-            style={
-              filter.selected ? { boxShadow: "0px 0px 20px 3px blue" } : null
-            }
-            onClick={() => handleClickFilterEvent(filter.id)}
-          />
-        ))}
+      <section className="filtersMap">
+        <div className="filtersRowEvent">
+          {filtersEvent.map((filter) => (
+            <button
+              key={filter.id}
+              style={
+                filter.selected
+                  ? {
+                      bottom: "-20px",
+                      animation: "effetLumiere 0.7s ease-in-out infinite",
+                    }
+                  : null
+              }
+              onClick={() => handleClickFilterEvent(filter.id)}
+            >
+              <img src={filter.image} alt={filter.type} />
+            </button>
+          ))}
+        </div>
+        <div className="section-filterShelter">
+          <button onClick={handleClickButtonShelters}>
+            <img
+              src={building}
+              alt="afficher les abris"
+              title="Afficher les abris"
+            />
+          </button>
+        </div>
       </section>
     </main>
   )
