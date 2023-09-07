@@ -9,6 +9,7 @@ const Search = () => {
   const handleInputChange = (e) => {
     setInputValue(e.target.value)
   }
+
   const handleSendSearch = () => {
     setSearch(inputValue)
     setInputValue("")
@@ -24,6 +25,7 @@ const Search = () => {
         value={inputValue}
         onChange={handleInputChange}
       />
+      {inputValue}
       <button onClick={handleSendSearch}>Send</button>
     </div>
   )

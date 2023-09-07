@@ -3,20 +3,24 @@
     flex-direction: column;
     align-items:flex-end;
     //justify-content: flex-end;
-    img{
-        height: 250px;
-        width: 250px;
-    }
+
     h4{
         margin-top: 75px;
-        margin-left: 100px;
+        margin-left: 75px;
         position: absolute;
         color: rgb(9, 9, 9);
     }
     .bulle{
+        height: 250px;
+        width: 350px;
         margin-right: 50px;
     }
     .IA{
+        height: 250px;
+        width: 250px;
         margin-left: 50px;
+    }
+    .Labulle{
+        display: flex;
     }
 }

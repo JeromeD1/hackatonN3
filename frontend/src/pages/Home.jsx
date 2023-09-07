@@ -190,7 +190,6 @@ export default function Home() {
             ))}
         </select>
       </section>
-
       <section className="section-filterEvent">
         {filtersEvent.map((filter) => (
           <img
