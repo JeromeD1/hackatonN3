@@ -1,6 +1,9 @@
 import { Routes, Route } from "react-router-dom"
 import { useState, useMemo, useEffect } from "react"
 import MyContext from "./components/MyContext"
+import  {SearchProvider}  from "./components/SearchContext"
+import Search from "./components/Search"
+
 
 import Home from "./pages/Home"
 
@@ -24,6 +27,9 @@ function App() {
 
   return (
     <div className="App">
+      <SearchProvider>
+        <Search />
+      </SearchProvider>
       <MyContext.Provider value={valeursFourniesDansMyContextProvider}>
         <Routes>
           <Route path="/" element={<Home />} />

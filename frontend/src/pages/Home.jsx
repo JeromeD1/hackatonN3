@@ -12,6 +12,7 @@ import incendie from "../assets/images/incendie.png"
 import tsunami from "../assets/images/tsunami.png"
 import radioactivite from "../assets/images/radioactivite.png"
 
+
 const iconTornade = L.icon({
   iconUrl: tornade,
   iconSize: [80, 120],
