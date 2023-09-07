@@ -1,6 +1,8 @@
 /* global L */
 
 import { useState, useEffect } from "react"
+import IABubbles from "../components/IABubbles"
+
 // import axios from "axios"
 import "./Home.scss"
 import { cities } from "../assets/variables/cities"
@@ -201,6 +203,9 @@ export default function Home() {
             onClick={() => handleClickFilterEvent(filter.id)}
           />
         ))}
+      </section>
+      <section>
+        <IABubbles />
       </section>
     </main>
   )
