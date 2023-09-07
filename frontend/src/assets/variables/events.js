@@ -119,4 +119,12 @@ const events = [
   { type: "incendie", icone: iconIncendie, lat: 43.6108, lng: 3.8767 },
 ]
 
-export { events }
+export {
+  events,
+  iconIncendie,
+  iconMeteorite,
+  iconRadioactivite,
+  iconTornade,
+  iconTsunami,
+  iconVolcan,
+}

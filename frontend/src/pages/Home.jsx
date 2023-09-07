@@ -5,7 +5,15 @@ import { useState, useEffect, useRef } from "react"
 import "./Home.scss"
 import { cities } from "../assets/variables/cities"
 import { filters } from "../assets/variables/filters"
-import { events } from "../assets/variables/events"
+import {
+  events,
+  iconIncendie,
+  iconMeteorite,
+  iconRadioactivite,
+  iconTornade,
+  iconTsunami,
+  iconVolcan,
+} from "../assets/variables/events"
 
 // import tornade from "../assets/images/tornade.png"
 // import meteorite from "../assets/images/meteorite.png"
@@ -122,13 +130,22 @@ export default function Home() {
         // Calculer la distance entre le point cliqué et chaque marqueur pour trouver le marqueur le plus proche
         let nearestMarker = null
         let minDistance = Infinity
-        markers.forEach((marker) => {
-          const distance = clickedPoint.distanceTo(marker.getLatLng())
-          if (distance < minDistance) {
-            minDistance = distance
-            nearestMarker = marker
-          }
-        })
+        // markers.forEach((marker) => {
+        //   const distance = clickedPoint.distanceTo(marker.getLatLng())
+        //   if (distance < minDistance) {
+        //     minDistance = distance
+        //     nearestMarker = marker
+        //   }
+        // })
+        markers
+          .filter((marker) => marker.options.icon === iconTornade)
+          .forEach((marker) => {
+            const distance = clickedPoint.distanceTo(marker.getLatLng())
+            if (distance < minDistance) {
+              minDistance = distance
+              nearestMarker = marker
+            }
+          })
 
         // Mettre à jour l'état avec les coordonnées du marqueur le plus proche
         setNearestMarker(nearestMarker ? nearestMarker.getLatLng() : null)
