@@ -1,6 +1,6 @@
 /* global L */
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 // import axios from "axios"
 import "./Home.scss"
 import { cities } from "../assets/variables/cities"
@@ -20,6 +20,8 @@ export default function Home() {
   const [citySelected, setCitySelected] = useState(cities[49])
   const [filtersEvent, setFiltersEvent] = useState(filters)
   const [markers, setMarkers] = useState([])
+  const roadsRef = useRef([])
+  const [roads, setRoads] = useState([])
   // Ajouter un nouvel état pour stocker les coordonnées du point cliqué et du marqueur le plus proche
   const [clickedPoint, setClickedPoint] = useState(null)
   const [nearestMarker, setNearestMarker] = useState(null)
@@ -131,9 +133,29 @@ export default function Home() {
         // Mettre à jour l'état avec les coordonnées du marqueur le plus proche
         setNearestMarker(nearestMarker ? nearestMarker.getLatLng() : null)
         // console.log("nearestMarker",nearestMarker.getLatLng());
+
+        if (nearestMarker) {
+          const waypoints = [
+            [clickedPoint.lat, clickedPoint.lng],
+            [nearestMarker.getLatLng().lat, nearestMarker.getLatLng().lng],
+          ]
+
+          // suppression des routes existantes
+          roadsRef.current.forEach((road) => road.remove())
+          // Créer un polyline avec les points de passage
+          const route = L.polyline(waypoints, { color: "red" }).addTo(map)
+          // Ajuster la vue de la carte pour afficher la route
+          // map.fitBounds(route.getBounds());
+
+          setRoads([route])
+        }
       })
     }
   }, [map, markers])
+
+  useEffect(() => {
+    roadsRef.current = roads
+  }, [roads])
 
   return (
     <main className="main-home">
