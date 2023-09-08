@@ -4,24 +4,34 @@
   align-items: flex-end;
 
   //justify-content: flex-end;
-  img {
-    height: 250px;
-    width: 250px;
-  }
+  // img {
+  //   height: 250px;
+  //   width: 250px;
+  // }
   h4 {
-    width: 90px;
-    margin-top: 30px;
-    margin-left: 80px;
+    width: 120px;
+    margin-bottom: 100px;
+    margin-left: 130px;
     position: absolute;
     font-size: 18px;
     color: rgb(9, 9, 9);
   }
   .bulle {
+    display: flex;
+    height: 250px;
+    width: 400px;
     margin-right: 50px;
   }
   .IA {
+    height: 250px;
+    width: 250px;
     margin-left: 50px;
   }
+
+  .Labulle {
+    display: flex;
+  }
+
   .barreRecherche {
     height: 50px;
     width: 300px;

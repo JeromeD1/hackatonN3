@@ -8,6 +8,7 @@ function IABubble({ onEnterPress }) {
   const [message, setMessage] = useState("posez vos questions")
   const [displayedMessage, setDisplayedMessage] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [show, setShow] = useState("hidden")
 
   const events = [
     { type: "tornade" },
@@ -62,9 +63,11 @@ function IABubble({ onEnterPress }) {
 
   const handleSendSearch = () => {
     const loweredValue = inputValue.toLowerCase()
-
-    let newMessage = "posez vos questions" // Default message
-
+    setShow("visible")
+    setTimeout(() => {
+      setShow("hidden")
+    }, 13000)
+    let newMessage = "posez vos questions"
     if (loweredValue.includes("abri")) {
       newMessage =
         "cliquer sur votre position pour connaitre l'abri le plus proche"
@@ -113,7 +116,8 @@ function IABubble({ onEnterPress }) {
 
   return (
     <div className="reponseIA">
-      <div style={{ display: postMessage.photoVisible ? "none" : "flex" }}>
+      {/* <div style={{ display: postMessage.photoVisible ? "none" : "flex" }}> */}
+      <div className="Labulle" style={{ visibility: show }}>
         <img className="bulle" src={bulleIA} alt="Bulle IA" />
         <h4>{displayedMessage}</h4>
       </div>

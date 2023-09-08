@@ -310,15 +310,15 @@ export default function Home() {
             </button>
           </div>
         </section>
-
-        <IABubbles
-          onEnterPress={(message) => {
-            if (message && message.startsWith("Attention!")) {
-              triggerShake()
-            }
-          }}
-        />
-
+        <div className="IABubbles">
+          <IABubbles
+            onEnterPress={(message) => {
+              if (message && message.startsWith("Attention!")) {
+                triggerShake()
+              }
+            }}
+          />
+        </div>
         <div className="bottomPanel">
           <BottomInfoPanel />
         </div>
