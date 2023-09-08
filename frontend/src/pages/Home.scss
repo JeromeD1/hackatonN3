@@ -80,6 +80,7 @@ $yellowColor: #f8e7a2;
         display: flex;
         justify-content: center;
         align-items: center;
+
         p {
           font-size: 1.6rem;
           margin: 0px;
@@ -122,6 +123,12 @@ $yellowColor: #f8e7a2;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         border: 2px solid black;
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: 0px 0px 20px 5px #f8e7a2;
+        }
+
         img {
           width: 70px;
         }

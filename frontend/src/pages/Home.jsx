@@ -300,7 +300,14 @@ export default function Home() {
               )}
             </div>
             <div className="unTier">
-              <button onClick={handleClickButtonShelters}>
+              <button
+                onClick={handleClickButtonShelters}
+                style={
+                  showShelters
+                    ? { boxShadow: "0px 0px 20px 5px lightgreen" }
+                    : null
+                }
+              >
                 <img
                   src={building}
                   alt="afficher les abris"
