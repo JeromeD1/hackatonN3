@@ -44,6 +44,7 @@ $yellowColor: #f8e7a2;
     position: fixed;
     display: flex;
     justify-content: center;
+
     .section-filterShelter {
       position: relative;
       z-index: 3;
@@ -57,6 +58,7 @@ $yellowColor: #f8e7a2;
       background-color: $blueColor;
       border-top-left-radius: 40px;
       border-top-right-radius: 40px;
+
       button {
         background-color: $yellowColor;
         width: 100px;
@@ -102,6 +104,12 @@ $yellowColor: #f8e7a2;
         }
       }
     }
+  }
+
+  .bottomPanel {
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
   }
 }
 
