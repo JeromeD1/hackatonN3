@@ -172,6 +172,18 @@ $yellowColor: #f8e7a2;
   }
 }
 
+.IABubbles {
+  width: 300px;
+  position: fixed;
+  right: 10px;
+  bottom: 400px;
+  margin: 0;
+
+  .responseIA {
+    width: 300px;
+  }
+}
+
 @keyframes effetLumiere {
   0% {
     box-shadow: 0 0 40px #fb0404;

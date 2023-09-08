@@ -36,7 +36,7 @@ function PopUp() {
                 <p>Rejoignez le réseau d'alerte pour ne rater aucune infos</p>
               </div>
               <div className="register">
-                <MonFormulaire />
+                <MonFormulaire closeModal={closeModal} />
               </div>
             </div>
           </div>

@@ -269,6 +269,7 @@ export default function Home() {
               </button>
             ))}
           </div>
+
           <div className="section-filterShelter">
             <div className="unTier">
               <img
@@ -310,6 +311,7 @@ export default function Home() {
             <div className="unTier"></div>
           </div>
         </section>
+
         <div className="IABubbles">
           <IABubbles
             onEnterPress={(message) => {

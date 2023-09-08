@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import "./MonFormulaire.scss"
 
-function MonFormulaire() {
+function MonFormulaire({ closeModal }) {
   const [formData, setFormData] = useState({
     nomPrenom: "",
     tel: "",
@@ -32,7 +32,6 @@ function MonFormulaire() {
                 placeholder="Nom/prénom"
                 value={formData.nomPrenom}
                 onChange={handleChange}
-                required
               />
             </div>
             <div>
@@ -43,7 +42,6 @@ function MonFormulaire() {
                 placeholder="Tel."
                 value={formData.tel}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -56,7 +54,6 @@ function MonFormulaire() {
                 placeholder="Mail"
                 value={formData.mail}
                 onChange={handleChange}
-                required
               />
             </div>
             <div>
@@ -67,13 +64,21 @@ function MonFormulaire() {
                 placeholder="Région"
                 value={formData.region}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
         </div>
         <div className="butonsubmit">
-          <button className="submit" type="submit">
+          <button
+            className="submit"
+            type="submit"
+            onClick={() => {
+              alert(
+                "Merci de vous être enregistre \n Vous recevrez maintenant des alertes en cas de catastrophe !"
+              )
+              closeModal()
+            }}
+          >
             Soumettre
           </button>
         </div>
