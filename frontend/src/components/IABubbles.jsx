@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import bulleIA from "../assets/images/bulleIA.png"
-import ReponseIA from "../assets/images/ReponseIA.png"
+import imageIAPouceBas from "../assets/images/imageIAPouceBas.png"
+import pouceHaut from "../assets/images/pouceHaut.png"
+
 import "./IABubbles.scss"
 
 function IABubble({ onEnterPress }) {
@@ -9,6 +11,7 @@ function IABubble({ onEnterPress }) {
   const [displayedMessage, setDisplayedMessage] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
   const [show, setShow] = useState("hidden")
+  const [pouce, setPouce] = useState(pouceHaut)
 
   const events = [
     { type: "tornade" },
@@ -47,6 +50,10 @@ function IABubble({ onEnterPress }) {
     { type: "incendie" },
   ]
 
+  // const changeImage = () => {
+  //   setPouce = true
+  // }
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value.toLowerCase())
   }
@@ -66,7 +73,7 @@ function IABubble({ onEnterPress }) {
     setShow("visible")
     setTimeout(() => {
       setShow("hidden")
-    }, 13000)
+    }, 50000)
     let newMessage = "posez vos questions"
     if (loweredValue.includes("abri")) {
       newMessage =
@@ -74,6 +81,12 @@ function IABubble({ onEnterPress }) {
     } else if (loweredValue.includes("securite")) {
       newMessage =
         "cliquer sur le bouton afficher les abris pour voir les abris sur la carte"
+    } else if (loweredValue.includes("sauve")) {
+      newMessage = "Non, vous allez mourir!"
+      setPouce(imageIAPouceBas)
+      setTimeout(() => {
+        setPouce(pouceHaut)
+      }, 5000)
     } else {
       const foundEvent = events.find((event) =>
         loweredValue.includes(event.type)
@@ -121,7 +134,7 @@ function IABubble({ onEnterPress }) {
         <img className="bulle" src={bulleIA} alt="Bulle IA" />
         <h4>{displayedMessage}</h4>
       </div>
-      <img className="IA" src={ReponseIA} alt="Réponse IA" />
+      <img className="IA" src={pouce} alt="Réponse IA" />
       <input
         className="barreRecherche"
         type="text"
