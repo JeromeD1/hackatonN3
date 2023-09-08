@@ -9,6 +9,7 @@ input {
   margin: 8px;
   border: 2px solid $yellowColor;
   color: black;
+
   &::placeholder {
     color: black;
   }
@@ -35,7 +36,9 @@ input {
   flex-wrap: nowrap;
   margin-bottom: 16px;
   gap: 6%;
+  border-radius: 12px;
 }
+
 .all {
   display: flex;
   flex-direction: column;

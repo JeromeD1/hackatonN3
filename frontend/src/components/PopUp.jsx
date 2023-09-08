@@ -26,14 +26,14 @@ function PopUp() {
               />
               <h2>Sûrevie</h2>
               <button className="findAbri" onClick={closeModal}>
-                Trouver votre abri
+                Trouvez votre abri
               </button>
               <div className="alerte">
                 <img
                   src="../src/assets/images/alerte.png"
                   alt="cloche d'alerte"
                 />
-                <p>Rejoignez le réseau d'alerte pour ne ratez aucune infos</p>
+                <p>Rejoignez le réseau d'alerte pour ne rater aucune infos</p>
               </div>
               <div className="register">
                 <MonFormulaire />

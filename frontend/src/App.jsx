@@ -1,11 +1,9 @@
 import { Routes, Route } from "react-router-dom"
 import { useState, useMemo, useEffect } from "react"
 import MyContext from "./components/MyContext"
-import NavBar from "./components/navBar"
 import Home from "./pages/Home"
 
 import "./App.css"
-import BottomInfoPanel from "./components/BottomInfoPanel"
 
 function App() {
   const [blind, setBlind] = useState(0)
@@ -46,7 +44,6 @@ function App() {
       <MyContext.Provider value={valeursFourniesDansMyContextProvider}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/bottompanel" element={<BottomInfoPanel />} />
         </Routes>
       </MyContext.Provider>
     </div>
