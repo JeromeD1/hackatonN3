@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react"
 // import axios from "axios"
 import PopUp from "../components/PopUp"
 import NavBar from "../components/navBar"
+import IABubbles from "../components/IABubbles"
 import "./Home.scss"
 import {
   shelters,
@@ -45,8 +46,14 @@ export default function Home() {
   const [FiltersShelter, setFiltersShelter] = useState(shelters)
   const [showShelters, setShowShelters] = useState(false)
   const [markersShelter, setMarkersShelter] = useState([])
+  const [shake, setShake] = useState(false)
   const shelterRef = useRef([])
   const [helpBottom, setHelpBottom] = useState(false)
+
+  const triggerShake = () => {
+    setShake(true)
+    setTimeout(() => setShake(false), 500)
+  }
 
   const handleClicklShowHelpBottom = () => {
     setHelpBottom(!helpBottom)
@@ -220,90 +227,101 @@ export default function Home() {
   }, [markersShelter])
 
   return (
-    <main className="main-home">
-      <PopUp />
+    <div className={`home-container ${shake ? "shake-animation" : ""}`}>
+      <main className="main-home">
+        <PopUp />
 
-      <section className="home-navbar">
-        <NavBar
-          filtersEvent={filtersEvent}
-          setFiltersShelter={setFiltersShelter}
-          FiltersShelter={FiltersShelter}
-        />
-      </section>
-      <div id="map"></div>
-      <section className="section-citySelect">
-        <select value={citySelected.city} onChange={handleChangeCity}>
-          {cities
-            .sort((a, b) => a.city.localeCompare(b.city))
-            .map((city) => (
-              <option key={city.city}>{city.city}</option>
+        <section className="home-navbar">
+          <NavBar
+            filtersEvent={filtersEvent}
+            setFiltersShelter={setFiltersShelter}
+            FiltersShelter={FiltersShelter}
+          />
+        </section>
+        <div id="map"></div>
+        <section className="section-citySelect">
+          <select value={citySelected.city} onChange={handleChangeCity}>
+            {cities
+              .sort((a, b) => a.city.localeCompare(b.city))
+              .map((city) => (
+                <option key={city.city}>{city.city}</option>
+              ))}
+          </select>
+        </section>
+
+        <section className="filtersMap">
+          <div className="filtersRowEvent">
+            {filtersEvent.map((filter) => (
+              <button
+                key={filter.id}
+                style={
+                  filter.selected
+                    ? {
+                        bottom: "-20px",
+                        animation: "effetLumiere 0.7s ease-in-out infinite",
+                      }
+                    : null
+                }
+                onClick={() => handleClickFilterEvent(filter.id)}
+              >
+                <img src={filter.image} alt={filter.type} />
+              </button>
             ))}
-        </select>
-      </section>
-
-      <section className="filtersMap">
-        <div className="filtersRowEvent">
-          {filtersEvent.map((filter) => (
-            <button
-              key={filter.id}
-              style={
-                filter.selected
-                  ? {
-                      bottom: "-20px",
-                      animation: "effetLumiere 0.7s ease-in-out infinite",
-                    }
-                  : null
-              }
-              onClick={() => handleClickFilterEvent(filter.id)}
-            >
-              <img src={filter.image} alt={filter.type} />
-            </button>
-          ))}
-        </div>
-        <div className="section-filterShelter">
-          <div className="unTier">
-            <img
-              className="interrogation-icon"
-              src={interrogation}
-              alt="aide"
-              onClick={handleClicklShowHelpBottom}
-            />
-            {helpBottom && (
-              <div>
-                <div className="helpRow">
-                  <p>Sélectionnez l'évenement</p>
-                  <img
-                    className="fleche haut"
-                    src={fleche}
-                    alt="flèche vers le haut indiquant les icones cliquables évenement"
-                  />
-                </div>
-                <div className="helpRow">
-                  <p>Puis les abris</p>
-                  <img
-                    className="fleche cote"
-                    src={fleche}
-                    alt="flèche vers la droite indiquant le bouton des abris"
-                  />
-                </div>
-              </div>
-            )}
           </div>
-          <div className="unTier">
-            <button onClick={handleClickButtonShelters}>
+          <div className="section-filterShelter">
+            <div className="unTier">
               <img
-                src={building}
-                alt="afficher les abris"
-                title="Afficher les abris"
+                className="interrogation-icon"
+                src={interrogation}
+                alt="aide"
+                onClick={handleClicklShowHelpBottom}
               />
-            </button>
+              {helpBottom && (
+                <div>
+                  <div className="helpRow">
+                    <p>Sélectionnez l'évenement</p>
+                    <img
+                      className="fleche haut"
+                      src={fleche}
+                      alt="flèche vers le haut indiquant les icones cliquables évenement"
+                    />
+                  </div>
+                  <div className="helpRow">
+                    <p>Puis les abris</p>
+                    <img
+                      className="fleche cote"
+                      src={fleche}
+                      alt="flèche vers la droite indiquant le bouton des abris"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="unTier">
+              <button onClick={handleClickButtonShelters}>
+                <img
+                  src={building}
+                  alt="afficher les abris"
+                  title="Afficher les abris"
+                />
+              </button>
+            </div>
+            <div className="unTier"></div>
           </div>
-          <div className="unTier"></div>
+        </section>
+        <div className="IABubbles">
+          <IABubbles
+            onEnterPress={(message) => {
+              if (message && message.startsWith("Attention!")) {
+                triggerShake()
+              }
+            }}
+          />
         </div>
-      </section>
-      <div className="bottomPanel">
-        <BottomInfoPanel />
-      </div>
-    </main>
+        <div className="bottomPanel">
+          <BottomInfoPanel />
+        </div>
+      </main>
+    </div>
   )
 }
