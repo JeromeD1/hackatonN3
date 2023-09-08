@@ -73,15 +73,15 @@ function IABubble({ onEnterPress }) {
     setShow("visible")
     setTimeout(() => {
       setShow("hidden")
-    }, 50000)
+    }, 20000)
     let newMessage = "posez vos questions"
     if (loweredValue.includes("abri")) {
       newMessage =
         "cliquer sur votre position pour connaitre l'abri le plus proche"
-    } else if (loweredValue.includes("securite")) {
+    } else if (loweredValue.includes("sécurité")) {
       newMessage =
         "cliquer sur le bouton afficher les abris pour voir les abris sur la carte"
-    } else if (loweredValue.includes("sauve")) {
+    } else if (loweredValue.includes("sauvé")) {
       newMessage = "Non, vous allez mourir!"
       setPouce(imageIAPouceBas)
       setTimeout(() => {
