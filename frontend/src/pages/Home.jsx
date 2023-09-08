@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useContext } from "react"
 import MyContext from "../components/MyContext"
 import PopUp from "../components/PopUp"
+import NavBar from "../components/navBar"
 import "./Home.scss"
 import {
   shelters,
@@ -260,6 +261,14 @@ export default function Home() {
   return (
     <main className="main-home">
       <PopUp />
+
+      <section className="home-navbar">
+        <NavBar
+          filtersEvent={filtersEvent}
+          setFiltersShelter={setFiltersShelter}
+          FiltersShelter={FiltersShelter}
+        />
+      </section>
       <div id="map"></div>
       <section className="section-citySelect">
         <select value={citySelected.city} onChange={handleChangeCity}>
