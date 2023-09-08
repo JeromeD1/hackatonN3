@@ -8,8 +8,10 @@ import cloche from "../assets/cloche.png"
 import interrogation from "../assets/images/interrogation.png"
 import MyContext from "./MyContext"
 import { useContext } from "react"
+import { shelters } from "../assets/variables/shelters"
+// import { shelters } from "../assets/variables/shelters"
 
-function NavBar() {
+function NavBar({ filtersEvent, setFiltersShelter, FiltersShelter }) {
   const {
     blind,
     setBlind,
@@ -21,14 +23,85 @@ function NavBar() {
     setAutistic,
   } = useContext(MyContext)
 
-  const handleClickBlind = () =>
+  const modifyVisibleShelters = (clickedHandicap) => {
+    const filteredEvents = filtersEvent
+      .filter((event) => event.selected === true)
+      .map((item) => item.type)
+
+    const filterbySelectedHandicap = (newShelters, clickedHandicap) => {
+      if (clickedHandicap !== "blind" && blind === 1) {
+        // on met 0 et pas 1 car on considère l'état précédant car la mise à jour du state est asynchrone
+        newShelters = newShelters.filter((shelter) => shelter.blind === 1)
+      }
+
+      if (clickedHandicap !== "deaf" && deaf === 1) {
+        newShelters = newShelters.filter((shelter) => shelter.deaf === 1)
+      }
+
+      if (clickedHandicap !== "handicap" && handicap === 1) {
+        newShelters = newShelters.filter((shelter) => shelter.handicap === 1)
+      }
+
+      if (clickedHandicap !== "autistic" && autistic === 1) {
+        newShelters = newShelters.filter((shelter) => shelter.autistic === 1)
+      }
+
+      return newShelters
+    }
+
+    let newShelters
+
+    if (filteredEvents.length === 0) {
+      newShelters = shelters
+      newShelters = filterbySelectedHandicap(newShelters, clickedHandicap)
+    } else {
+      newShelters = shelters.filter((item) =>
+        item.events.some((event) => filteredEvents.includes(event))
+      )
+      newShelters = filterbySelectedHandicap(newShelters, clickedHandicap)
+    }
+
+    if (clickedHandicap === "blind" && blind === 0) {
+      // on met 0 et pas 1 car on considère l'état précédant car la mise à jour du state est asynchrone
+      newShelters = newShelters.filter((shelter) => shelter.blind === 1)
+    }
+
+    if (clickedHandicap === "deaf" && deaf === 0) {
+      newShelters = newShelters.filter((shelter) => shelter.deaf === 1)
+    }
+
+    if (clickedHandicap === "handicap" && handicap === 0) {
+      newShelters = newShelters.filter((shelter) => shelter.handicap === 1)
+    }
+
+    if (clickedHandicap === "autistic" && autistic === 0) {
+      newShelters = newShelters.filter((shelter) => shelter.autistic === 1)
+    }
+
+    setFiltersShelter(newShelters)
+  }
+
+  const handleClickBlind = () => {
     setBlind((prevstate) => (prevstate === 0 ? 1 : 0))
-  const handleClickDeaf = () =>
+
+    modifyVisibleShelters("blind")
+  }
+
+  const handleClickDeaf = () => {
     setDeaf((prevstate) => (prevstate === 0 ? 1 : 0))
-  const handleClickHandicap = () =>
+
+    modifyVisibleShelters("deaf")
+  }
+
+  const handleClickHandicap = () => {
     setHandicap((prevstate) => (prevstate === 0 ? 1 : 0))
-  const handleClickAutistic = () =>
+    modifyVisibleShelters("handicap")
+  }
+
+  const handleClickAutistic = () => {
     setAutistic((prevstate) => (prevstate === 0 ? 1 : 0))
+    modifyVisibleShelters("autistic")
+  }
 
   return (
     <div className="navBar">
