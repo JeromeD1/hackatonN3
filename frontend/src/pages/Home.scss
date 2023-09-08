@@ -45,6 +45,7 @@ $yellowColor: #f8e7a2;
     position: fixed;
     display: flex;
     justify-content: center;
+
     .section-filterShelter {
       position: relative;
       z-index: 3;
@@ -58,6 +59,7 @@ $yellowColor: #f8e7a2;
       background-color: $blueColor;
       border-top-left-radius: 40px;
       border-top-right-radius: 40px;
+
       button {
         background-color: $yellowColor;
         width: 100px;
@@ -104,30 +106,12 @@ $yellowColor: #f8e7a2;
       }
     }
   }
-}
 
-.IABubbles {
-  padding-top: 350px;
-  padding-right: 70px;
-}
-
-@keyframes effetLumiere {
-  0% {
-    box-shadow: 0 0 40px #fb0404;
+  .bottomPanel {
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
   }
-  50% {
-    box-shadow: 0 0 10px #fb0404;
-  }
-  100% {
-    box-shadow: 0 0 40px #fb0404;
-  }
-}
-
-img {
-  width: 50px;
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.1s;
 }
 
 @keyframes effetLumiere {

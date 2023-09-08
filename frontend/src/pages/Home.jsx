@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef, useContext } from "react"
 import MyContext from "../components/MyContext"
 import PopUp from "../components/PopUp"
-import IABubbles from "../components/IABubbles"
 import "./Home.scss"
 import {
   shelters,
@@ -27,6 +26,7 @@ import { cities } from "../assets/variables/cities"
 import { filters } from "../assets/variables/filters"
 import { fshelters } from "../assets/variables/fshelters"
 import building from "../assets/images/building.png"
+import BottomInfoPanel from "../components/BottomInfoPanel"
 
 export default function Home() {
   const {
@@ -53,13 +53,8 @@ export default function Home() {
   const [FiltersShelter, setFiltersShelter] = useState(shelters)
   const [showShelters, setShowShelters] = useState(false)
   const [markersShelter, setMarkersShelter] = useState([])
-  const [shake, setShake] = useState(false)
-  const shelterRef = useRef([])
 
-  const triggerShake = () => {
-    setShake(true)
-    setTimeout(() => setShake(false), 500)
-  }
+  const shelterRef = useRef([])
 
   const handleClickButtonShelters = () => {
     setShowShelters(!showShelters)
@@ -308,14 +303,8 @@ export default function Home() {
           </button>
         </div>
       </section>
-      <div className="IABubbles">
-        <IABubbles
-          onEnterPress={(message) => {
-            if (message && message.startsWith("Attention!")) {
-              triggerShake()
-            }
-          }}
-        />
+      <div className="bottomPanel">
+        <BottomInfoPanel />
       </div>
     </main>
   )

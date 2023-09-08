@@ -5,6 +5,7 @@ import NavBar from "./components/navBar"
 import Home from "./pages/Home"
 
 import "./App.css"
+import BottomInfoPanel from "./components/BottomInfoPanel"
 
 function App() {
   const [blind, setBlind] = useState(0)
@@ -46,6 +47,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/bottompanel" element={<BottomInfoPanel />} />
         </Routes>
       </MyContext.Provider>
     </div>
