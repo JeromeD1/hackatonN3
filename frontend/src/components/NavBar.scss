@@ -1,0 +1,61 @@
+.navBar {
+  height: 95px;
+  width: 100%;
+  background-color: #77abdc;
+
+  ul {
+    width: 100%;
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    .astrolabe-icon {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 20px;
+      //   margin-top: 10px;
+      img {
+        width: 30%;
+      }
+    }
+
+    .surevie-text {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 430px;
+      p {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 30px;
+        color: whitesmoke;
+      }
+    }
+
+    .icon-group {
+      // flex: 1.5;
+      display: flex;
+      // align-items: center;
+      // justify-content: center;
+      gap: 15px;
+      img {
+        width: 13%;
+      }
+    }
+
+    .cloche-icon {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 20px;
+      img {
+        width: 20%;
+      }
+    }
+  }
+}
