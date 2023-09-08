@@ -240,6 +240,7 @@ export default function Home() {
         </section>
         <div id="map"></div>
         <section className="section-citySelect">
+          <p>Ou vous situez vous ?</p>
           <select value={citySelected.city} onChange={handleChangeCity}>
             {cities
               .sort((a, b) => a.city.localeCompare(b.city))
@@ -268,6 +269,7 @@ export default function Home() {
               </button>
             ))}
           </div>
+
           <div className="section-filterShelter">
             <div className="unTier">
               <img
@@ -309,6 +311,7 @@ export default function Home() {
             <div className="unTier"></div>
           </div>
         </section>
+
         <div className="IABubbles">
           <IABubbles
             onEnterPress={(message) => {
