@@ -271,6 +271,7 @@ export default function Home() {
       </section>
       <div id="map"></div>
       <section className="section-citySelect">
+        <p>Ou vous situez vous ?</p>
         <select value={citySelected.city} onChange={handleChangeCity}>
           {cities
             .sort((a, b) => a.city.localeCompare(b.city))
