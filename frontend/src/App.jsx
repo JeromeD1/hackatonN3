@@ -44,7 +44,6 @@ function App() {
   return (
     <div className="App">
       <MyContext.Provider value={valeursFourniesDansMyContextProvider}>
-        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/bottompanel" element={<BottomInfoPanel />} />

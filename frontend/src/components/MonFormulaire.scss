@@ -1,11 +1,25 @@
+$yellowColor: #f8e7a2;
+$blueColor: #77abdc;
+
 input {
-  border-radius: 50px;
+  width: 200px;
+  height: 40px;
+  background-color: rgb(119, 171, 220, 0.5);
   border: none;
+  margin: 8px;
+  border: 2px solid $yellowColor;
+  color: black;
+  &::placeholder {
+    color: black;
+  }
 }
 
-button {
+.submit {
   border-radius: 50px;
   border: none;
+  background-color: $yellowColor;
+  width: 200px;
+  height: 50px;
 }
 
 .part1 {

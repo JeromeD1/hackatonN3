@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react"
 // import axios from "axios"
 import PopUp from "../components/PopUp"
+import NavBar from "../components/navBar"
 import "./Home.scss"
 import {
   shelters,
@@ -26,6 +27,8 @@ import { cities } from "../assets/variables/cities"
 import { filters } from "../assets/variables/filters"
 import { fshelters } from "../assets/variables/fshelters"
 import building from "../assets/images/building.png"
+import interrogation from "../assets/images/interrogation.png"
+import fleche from "../assets/images/fleche.png"
 import BottomInfoPanel from "../components/BottomInfoPanel"
 
 export default function Home() {
@@ -43,6 +46,11 @@ export default function Home() {
   const [showShelters, setShowShelters] = useState(false)
   const [markersShelter, setMarkersShelter] = useState([])
   const shelterRef = useRef([])
+  const [helpBottom, setHelpBottom] = useState(false)
+
+  const handleClicklShowHelpBottom = () => {
+    setHelpBottom(!helpBottom)
+  }
 
   const handleClickButtonShelters = () => {
     setShowShelters(!showShelters)
@@ -214,6 +222,14 @@ export default function Home() {
   return (
     <main className="main-home">
       <PopUp />
+
+      <section className="home-navbar">
+        <NavBar
+          filtersEvent={filtersEvent}
+          setFiltersShelter={setFiltersShelter}
+          FiltersShelter={FiltersShelter}
+        />
+      </section>
       <div id="map"></div>
       <section className="section-citySelect">
         <select value={citySelected.city} onChange={handleChangeCity}>
@@ -245,13 +261,44 @@ export default function Home() {
           ))}
         </div>
         <div className="section-filterShelter">
-          <button onClick={handleClickButtonShelters}>
+          <div className="unTier">
             <img
-              src={building}
-              alt="afficher les abris"
-              title="Afficher les abris"
+              className="interrogation-icon"
+              src={interrogation}
+              alt="aide"
+              onClick={handleClicklShowHelpBottom}
             />
-          </button>
+            {helpBottom && (
+              <div>
+                <div className="helpRow">
+                  <p>Sélectionnez l'évenement</p>
+                  <img
+                    className="fleche haut"
+                    src={fleche}
+                    alt="flèche vers le haut indiquant les icones cliquables évenement"
+                  />
+                </div>
+                <div className="helpRow">
+                  <p>Puis les abris</p>
+                  <img
+                    className="fleche cote"
+                    src={fleche}
+                    alt="flèche vers la droite indiquant le bouton des abris"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="unTier">
+            <button onClick={handleClickButtonShelters}>
+              <img
+                src={building}
+                alt="afficher les abris"
+                title="Afficher les abris"
+              />
+            </button>
+          </div>
+          <div className="unTier"></div>
         </div>
       </section>
       <div className="bottomPanel">

@@ -14,12 +14,17 @@ $yellowColor: #f8e7a2;
 
   ul {
     width: 100%;
+    height: 100%;
     display: flex;
     list-style-type: none;
     padding: 0;
     margin: 0;
     align-items: center;
 
+    li {
+      display: flex;
+      align-items: center;
+    }
     .astrolabe-icon {
       flex: 1;
       position: relative;
@@ -29,7 +34,7 @@ $yellowColor: #f8e7a2;
       padding-left: 20px;
       //   margin-top: 10px;
       img {
-        width: 30%;
+        width: 100px;
       }
     }
 
@@ -65,7 +70,7 @@ $yellowColor: #f8e7a2;
       justify-content: flex-end;
       padding-right: 20px;
       img {
-        width: 20%;
+        width: 60px;
       }
     }
   }

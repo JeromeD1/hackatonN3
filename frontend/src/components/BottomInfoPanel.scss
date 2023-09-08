@@ -2,7 +2,7 @@ $blueColor: #77abdc;
 $yellowColor: #f8e7a2;
 
 .pannelInfos {
-  width: 100%;
+  width: 100vw;
   height: 40px; // A modifier lors de l'integration !!!!!!!
   display: flex;
   align-items: center;
@@ -12,15 +12,14 @@ $yellowColor: #f8e7a2;
   // position: absolute;
   // bottom: 0;
   border-top: 5px solid red;
-  
+
   .scrollingText {
-    display: inline-block; 
-    animation: scrollText 30s linear infinite; 
+    display: inline-block;
+    animation: scrollText 30s linear infinite;
 
     p {
       font-size: 1.5em;
     }
-
   }
 }
 
