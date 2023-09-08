@@ -1,6 +1,6 @@
 /* global L */
-import { useState, useEffect, useRef } from "react"
-// import axios from "axios"
+import { useState, useEffect, useRef, useContext } from "react"
+import MyContext from "../components/MyContext"
 import PopUp from "../components/PopUp"
 import "./Home.scss"
 import {
@@ -28,8 +28,20 @@ import { fshelters } from "../assets/variables/fshelters"
 import building from "../assets/images/building.png"
 import interrogation from "../assets/images/interrogation.png"
 import fleche from "../assets/images/fleche.png"
+import BottomInfoPanel from "../components/BottomInfoPanel"
 
 export default function Home() {
+  const {
+    blind,
+    setBlind,
+    deaf,
+    setDeaf,
+    handicap,
+    setHandicap,
+    autistic,
+    setAutistic,
+  } = useContext(MyContext)
+
   const [mounted, setMounted] = useState(false)
   const [map, setMap] = useState(null)
   const [citySelected, setCitySelected] = useState(cities[49])
@@ -43,6 +55,7 @@ export default function Home() {
   const [FiltersShelter, setFiltersShelter] = useState(shelters)
   const [showShelters, setShowShelters] = useState(false)
   const [markersShelter, setMarkersShelter] = useState([])
+
   const shelterRef = useRef([])
   const [helpBottom, setHelpBottom] = useState(false)
 
@@ -63,6 +76,9 @@ export default function Home() {
   }
 
   const handleClickFilterEvent = (id) => {
+    // suppression des routes existantes
+    roadsRef.current.forEach((road) => road.remove())
+
     setFiltersEvent((prevstate) =>
       prevstate.map((item) =>
         item.id === id ? { ...item, selected: !item.selected } : item
@@ -75,14 +91,41 @@ export default function Home() {
       .filter((event) => event.selected === true)
       .map((item) => item.type)
 
+    // if (filteredEvents.length === 0) {
+    //   setFiltersShelter(shelters)
+    // } else {
+    //   const newShelters = shelters.filter((item) =>
+    //     item.events.some((event) => filteredEvents.includes(event))
+    //   )
+    //   setFiltersShelter(newShelters)
+    // }
+    let newShelters
+
     if (filteredEvents.length === 0) {
-      setFiltersShelter(shelters)
+      newShelters = shelters
     } else {
-      const newShelters = FiltersShelter.filter((item) =>
+      newShelters = shelters.filter((item) =>
         item.events.some((event) => filteredEvents.includes(event))
       )
-      setFiltersShelter(newShelters)
     }
+
+    if (blind === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.blind === 1)
+    }
+
+    if (deaf === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.deaf === 1)
+    }
+
+    if (handicap === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.handicap === 1)
+    }
+
+    if (autistic === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.autistic === 1)
+    }
+
+    setFiltersShelter(newShelters)
   }
 
   useEffect(() => {
@@ -108,16 +151,6 @@ export default function Home() {
           icon: item.icone,
         }).addTo(mapInstance)
       )
-
-      // const newMarkers = events.map((item) =>
-      //   {
-      //    let mark= L.marker([item.lat, item.lng], {
-      //     icon: item.icone,
-      //   }).addTo(mapInstance)
-
-      //   mark.bindTooltip('Texte à afficher').openTooltip();
-      // }
-      // )
 
       setMarkers(newMarkers)
     }
@@ -157,6 +190,10 @@ export default function Home() {
     if (map) {
       // Ajouter un gestionnaire d'événements pour l'événement click de la carte
       map.on("click", function (e) {
+        // suppression des routes existantes
+        roadsRef.current.forEach((road) => road.remove())
+        setRoads([])
+
         // Récupérer les coordonnées du point cliqué
         const clickedPoint = e.latlng
         setClickedPoint(clickedPoint)
@@ -183,14 +220,13 @@ export default function Home() {
             [nearestMarker.getLatLng().lat, nearestMarker.getLatLng().lng],
           ]
 
-          // suppression des routes existantes
-          roadsRef.current.forEach((road) => road.remove())
           // Créer un polyline avec les points de passage
           const route = L.polyline(waypoints, { color: "red" }).addTo(map)
           // Ajuster la vue de la carte pour afficher la route
           // map.fitBounds(route.getBounds());
 
-          setRoads([route])
+          // setRoads([route])
+          setRoads((prevRoads) => [...prevRoads, route])
         }
       })
     }
@@ -202,6 +238,8 @@ export default function Home() {
 
   useEffect(() => {
     if (showShelters) {
+      markersShelter.forEach((marker) => marker.remove())
+
       const newShelters = FiltersShelter.map((item) =>
         L.marker([item.lat, item.lng], {
           icon: item.icone,
@@ -213,7 +251,7 @@ export default function Home() {
       markersShelter.forEach((marker) => marker.remove())
       setMarkersShelter([])
     }
-  }, [showShelters])
+  }, [showShelters, FiltersShelter, filtersEvent])
 
   useEffect(() => {
     shelterRef.current = markersShelter
@@ -293,6 +331,9 @@ export default function Home() {
           <div className="unTier"></div>
         </div>
       </section>
+      <div className="bottomPanel">
+        <BottomInfoPanel />
+      </div>
     </main>
   )
 }

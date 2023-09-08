@@ -5,17 +5,36 @@ import NavBar from "./components/navBar"
 import Home from "./pages/Home"
 
 import "./App.css"
+import BottomInfoPanel from "./components/BottomInfoPanel"
 
 function App() {
-  const [user, setUser] = useState({}) // A REMPLACER PAR LE STATE VOULU
+  const [blind, setBlind] = useState(0)
+  const [deaf, setDeaf] = useState(0)
+  const [handicap, setHandicap] = useState(0)
+  const [autistic, setAutistic] = useState(0)
 
   // stockage de l'état initial de user, setUser et users via un useMemo
   const valeursFourniesDansMyContextProvider = useMemo(
     () => ({
-      user, // A REMPLACER OU AJOUTER EN FONCTION DU BESOIN
-      setUser,
+      blind,
+      setBlind,
+      deaf,
+      setDeaf,
+      handicap,
+      setHandicap,
+      autistic,
+      setAutistic,
     }),
-    [user, setUser]
+    [
+      blind,
+      setBlind,
+      deaf,
+      setDeaf,
+      handicap,
+      setHandicap,
+      autistic,
+      setAutistic,
+    ]
   )
 
   useEffect(() => {
@@ -28,6 +47,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/bottompanel" element={<BottomInfoPanel />} />
         </Routes>
       </MyContext.Provider>
     </div>
