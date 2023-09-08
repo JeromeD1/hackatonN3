@@ -1,6 +1,6 @@
 /* global L */
-import { useState, useEffect, useRef } from "react"
-// import axios from "axios"
+import { useState, useEffect, useRef, useContext } from "react"
+import MyContext from "../components/MyContext"
 import PopUp from "../components/PopUp"
 import "./Home.scss"
 import {
@@ -28,6 +28,17 @@ import { fshelters } from "../assets/variables/fshelters"
 import building from "../assets/images/building.png"
 
 export default function Home() {
+  const {
+    blind,
+    setBlind,
+    deaf,
+    setDeaf,
+    handicap,
+    setHandicap,
+    autistic,
+    setAutistic,
+  } = useContext(MyContext)
+
   const [mounted, setMounted] = useState(false)
   const [map, setMap] = useState(null)
   const [citySelected, setCitySelected] = useState(cities[49])
@@ -41,6 +52,7 @@ export default function Home() {
   const [FiltersShelter, setFiltersShelter] = useState(shelters)
   const [showShelters, setShowShelters] = useState(false)
   const [markersShelter, setMarkersShelter] = useState([])
+
   const shelterRef = useRef([])
 
   const handleClickButtonShelters = () => {
@@ -71,14 +83,41 @@ export default function Home() {
       .filter((event) => event.selected === true)
       .map((item) => item.type)
 
+    // if (filteredEvents.length === 0) {
+    //   setFiltersShelter(shelters)
+    // } else {
+    //   const newShelters = shelters.filter((item) =>
+    //     item.events.some((event) => filteredEvents.includes(event))
+    //   )
+    //   setFiltersShelter(newShelters)
+    // }
+    let newShelters
+
     if (filteredEvents.length === 0) {
-      setFiltersShelter(shelters)
+      newShelters = shelters
     } else {
-      const newShelters = shelters.filter((item) =>
+      newShelters = shelters.filter((item) =>
         item.events.some((event) => filteredEvents.includes(event))
       )
-      setFiltersShelter(newShelters)
     }
+
+    if (blind === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.blind === 1)
+    }
+
+    if (deaf === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.deaf === 1)
+    }
+
+    if (handicap === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.handicap === 1)
+    }
+
+    if (autistic === 1) {
+      newShelters = newShelters.filter((shelter) => shelter.autistic === 1)
+    }
+
+    setFiltersShelter(newShelters)
   }
 
   useEffect(() => {
