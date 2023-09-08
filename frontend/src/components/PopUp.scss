@@ -41,9 +41,13 @@ h2 {
   color: rgb(248, 231, 162);
   padding: 16px;
   font-size: medium;
-  height: 2vh;
+  width:300px;
+  height:80px;
   display: flex;
   align-items: center;
+  font-size:1.5rem;
+  justify-content: center;
+  margin-top:16px;
 }
 
 .findAbri:hover {

@@ -48,7 +48,7 @@ $yellowColor: #f8e7a2;
       position: relative;
       z-index: 3;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       position: fixed;
       bottom: 0px;
@@ -57,11 +57,58 @@ $yellowColor: #f8e7a2;
       background-color: $blueColor;
       border-top-left-radius: 40px;
       border-top-right-radius: 40px;
+      border: 2px solid black;
+        p{
+          vertical-align: center;
+        }
+      .unTier{
+        width:33%;
+        height: 100%;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+          p{
+            font-size: 1.6rem;
+            margin:0px;
+          }
+      }
+      .interrogation-icon{
+        display:flex;
+        justify-content: flex-start;
+        width:100px;
+        object-fit: contain;
+        display: inline-block;
+      }
+
+      .helpRow{
+        height: 50%;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        .fleche{
+          width:20%;
+        }
+        .haut{
+          position:relative;
+          transform:rotate(-90deg);
+          object-fit: contain;
+          animation: flecheHaut 1.2s ease-in-out infinite;
+        }
+
+        .cote{
+          position:relative;
+          animation: flecheCote 1.2s ease-in-out infinite;
+        }
+      }
+
       button {
         background-color: $yellowColor;
         width: 100px;
         height: 100px;
-        border-radius: 50%;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border: 2px solid black;
         img {
           width: 70px;
         }
@@ -76,7 +123,7 @@ $yellowColor: #f8e7a2;
       top: 20px;
       z-index: 3;
       justify-content: space-around;
-      width: 80%;
+      width: 50%;
       height: 150px;
       button {
         position: relative;
@@ -90,6 +137,7 @@ $yellowColor: #f8e7a2;
         justify-content: center;
         padding-top: 8px;
         transition: transform 0.1s;
+        border: 2px solid black;
         &:hover {
           bottom: -20px;
         }
@@ -114,5 +162,29 @@ $yellowColor: #f8e7a2;
   }
   100% {
     box-shadow: 0 0 40px #fb0404;
+  }
+}
+
+@keyframes flecheHaut {
+  0% {
+    bottom:20px
+  }
+  50% {
+    bottom:10px
+  }
+  100% {
+    bottom:20px
+  }
+}
+
+@keyframes flecheCote {
+  0% {
+    right:20px
+  }
+  50% {
+    right:10px
+  }
+  100% {
+    right:20px
   }
 }

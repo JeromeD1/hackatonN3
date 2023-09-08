@@ -73,7 +73,7 @@ function MonFormulaire() {
           </div>
         </div>
         <div className="butonsubmit">
-          <button type="submit">Soumettre</button>
+          <button className="submit"type="submit">Soumettre</button>
         </div>
       </form>
     </>

@@ -5,6 +5,7 @@ import chaiseRoulante from "../assets/chaiseRoulante.png"
 import oreille from "../assets/oreille.png"
 import teteEclaire from "../assets/teteEclaire.png"
 import cloche from "../assets/cloche.png"
+import interrogation from "../assets/images/interrogation.png"
 
 function NavBar() {
   // const speak = (text) => {
@@ -23,7 +24,7 @@ function NavBar() {
           <img src={astrolabe} alt="logo" title="logo" />
         </li>
         <li className="surevie-text">
-          <p>Sûrevie</p>
+          <p>SÛREVIE</p>
         </li>
         <li className="icon-group">
           <img
@@ -46,6 +47,9 @@ function NavBar() {
             alt="maladie mentale"
             title="maladie mentale"
           />
+        </li>
+        <li className="interrogation-icon">
+          <img src={interrogation} alt="aide" title="alertes" />
         </li>
         <li className="cloche-icon">
           <img src={cloche} alt="alertes" title="alertes" />
