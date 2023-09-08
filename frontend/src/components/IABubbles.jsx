@@ -62,31 +62,35 @@ function IABubble({ onEnterPress }) {
 
   const handleSendSearch = () => {
     const loweredValue = inputValue.toLowerCase()
+
+    let newMessage = "posez vos questions" // Default message
+
     if (loweredValue.includes("abri")) {
-      setMessage(
+      newMessage =
         "cliquer sur votre position pour connaitre l'abri le plus proche"
-      )
-      setInputValue("")
-      return
-    }
-    if (loweredValue.includes("securite")) {
-      setMessage(
+    } else if (loweredValue.includes("securite")) {
+      newMessage =
         "cliquer sur le bouton afficher les abris pour voir les abris sur la carte"
+    } else {
+      const foundEvent = events.find((event) =>
+        loweredValue.includes(event.type)
       )
-      setInputValue("")
-      return
+      if (foundEvent) {
+        const count = events.filter(
+          (event) => event.type === foundEvent.type
+        ).length
+        newMessage = `Attention! Il y a ${count} ${foundEvent.type}s en approche!`
+      }
     }
 
-    const foundEvent = events.find((event) => loweredValue.includes(event.type))
-    if (foundEvent) {
-      const count = events.filter(
-        (event) => event.type === foundEvent.type
-      ).length
-      setMessage(`Attention! Il y a ${count} ${foundEvent.type}s en approche!`)
-    } else {
-      setMessage("posez vos questions")
-    }
+    setMessage(newMessage)
     setInputValue("")
+
+    // This part checks if the `onEnterPress` callback exists
+    // and passes the decided message to it.
+    if (onEnterPress) {
+      onEnterPress(newMessage)
+    }
   }
 
   useEffect(() => {

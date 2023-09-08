@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useContext } from "react"
 import MyContext from "../components/MyContext"
 import PopUp from "../components/PopUp"
+import IABubbles from "../components/IABubbles"
 import "./Home.scss"
 import {
   shelters,
@@ -53,8 +54,13 @@ export default function Home() {
   const [FiltersShelter, setFiltersShelter] = useState(shelters)
   const [showShelters, setShowShelters] = useState(false)
   const [markersShelter, setMarkersShelter] = useState([])
-
+  const [shake, setShake] = useState(false)
   const shelterRef = useRef([])
+
+  const triggerShake = () => {
+    setShake(true)
+    setTimeout(() => setShake(false), 500)
+  }
 
   const handleClickButtonShelters = () => {
     setShowShelters(!showShelters)
@@ -261,51 +267,62 @@ export default function Home() {
   }, [markersShelter])
 
   return (
-    <main className="main-home">
-      <PopUp />
-      <div id="map"></div>
-      <section className="section-citySelect">
-        <select value={citySelected.city} onChange={handleChangeCity}>
-          {cities
-            .sort((a, b) => a.city.localeCompare(b.city))
-            .map((city) => (
-              <option key={city.city}>{city.city}</option>
-            ))}
-        </select>
-      </section>
+    <div className={`home-container ${shake ? "shake-animation" : ""}`}>
+      <main className="main-home">
+        <PopUp />
+        <div id="map"></div>
+        <section className="section-citySelect">
+          <select value={citySelected.city} onChange={handleChangeCity}>
+            {cities
+              .sort((a, b) => a.city.localeCompare(b.city))
+              .map((city) => (
+                <option key={city.city}>{city.city}</option>
+              ))}
+          </select>
+        </section>
 
-      <section className="filtersMap">
-        <div className="filtersRowEvent">
-          {filtersEvent.map((filter) => (
-            <button
-              key={filter.id}
-              style={
-                filter.selected
-                  ? {
-                      bottom: "-20px",
-                      animation: "effetLumiere 0.7s ease-in-out infinite",
-                    }
-                  : null
-              }
-              onClick={() => handleClickFilterEvent(filter.id)}
-            >
-              <img src={filter.image} alt={filter.type} />
+        <section className="filtersMap">
+          <div className="filtersRowEvent">
+            {filtersEvent.map((filter) => (
+              <button
+                key={filter.id}
+                style={
+                  filter.selected
+                    ? {
+                        bottom: "-20px",
+                        animation: "effetLumiere 0.7s ease-in-out infinite",
+                      }
+                    : null
+                }
+                onClick={() => handleClickFilterEvent(filter.id)}
+              >
+                <img src={filter.image} alt={filter.type} />
+              </button>
+            ))}
+          </div>
+          <div className="section-filterShelter">
+            <button onClick={handleClickButtonShelters}>
+              <img
+                src={building}
+                alt="afficher les abris"
+                title="Afficher les abris"
+              />
             </button>
-          ))}
+          </div>
+        </section>
+
+        <IABubbles
+          onEnterPress={(message) => {
+            if (message && message.startsWith("Attention!")) {
+              triggerShake()
+            }
+          }}
+        />
+
+        <div className="bottomPanel">
+          <BottomInfoPanel />
         </div>
-        <div className="section-filterShelter">
-          <button onClick={handleClickButtonShelters}>
-            <img
-              src={building}
-              alt="afficher les abris"
-              title="Afficher les abris"
-            />
-          </button>
-        </div>
-      </section>
-      <div className="bottomPanel">
-        <BottomInfoPanel />
-      </div>
-    </main>
+      </main>
+    </div>
   )
 }
