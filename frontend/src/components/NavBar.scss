@@ -1,3 +1,5 @@
+$yellowColor: #f8e7a2;
+
 .navBar {
   height: 95px;
   width: 100%;
@@ -32,7 +34,7 @@
       p {
         font-family: "Times New Roman", Times, serif;
         font-size: 30px;
-        color: whitesmoke;
+        color: $yellowColor;
       }
     }
 
