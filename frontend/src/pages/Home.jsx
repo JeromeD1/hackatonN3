@@ -44,10 +44,10 @@ export default function Home() {
   const [showShelters, setShowShelters] = useState(false)
   const [markersShelter, setMarkersShelter] = useState([])
   const shelterRef = useRef([])
-  const [helpBottom,setHelpBottom]=useState(false)
+  const [helpBottom, setHelpBottom] = useState(false)
 
-  const handleClicklShowHelpBottom=()=>{
-    setHelpBottom(!helpBottom);
+  const handleClicklShowHelpBottom = () => {
+    setHelpBottom(!helpBottom)
   }
 
   const handleClickButtonShelters = () => {
@@ -254,29 +254,43 @@ export default function Home() {
         </div>
         <div className="section-filterShelter">
           <div className="unTier">
-            <img className="interrogation-icon" src={interrogation} alt="aide" onClick={handleClicklShowHelpBottom} />
-            {helpBottom && <div>
-                <div className="helpRow">
-                    <p>Sélectionnez l'évenement</p>
-                    <img className="fleche haut" src={fleche} alt="flèche vers le haut indiquant les icones cliquables évenement" />
-                  </div>
-                  <div className="helpRow">
-                    <p>Puis les abris</p>
-                    <img className="fleche cote" src={fleche} alt="flèche vers la droite indiquant le bouton des abris" />
-                  </div>
-                </div>}
-          </div>
-          <div className="unTier">
-          <button onClick={handleClickButtonShelters}>
             <img
-              src={building}
-              alt="afficher les abris"
-              title="Afficher les abris"
+              className="interrogation-icon"
+              src={interrogation}
+              alt="aide"
+              onClick={handleClicklShowHelpBottom}
             />
-          </button>
+            {helpBottom && (
+              <div>
+                <div className="helpRow">
+                  <p>Sélectionnez l'évenement</p>
+                  <img
+                    className="fleche haut"
+                    src={fleche}
+                    alt="flèche vers le haut indiquant les icones cliquables évenement"
+                  />
+                </div>
+                <div className="helpRow">
+                  <p>Puis les abris</p>
+                  <img
+                    className="fleche cote"
+                    src={fleche}
+                    alt="flèche vers la droite indiquant le bouton des abris"
+                  />
+                </div>
+              </div>
+            )}
           </div>
           <div className="unTier">
+            <button onClick={handleClickButtonShelters}>
+              <img
+                src={building}
+                alt="afficher les abris"
+                title="Afficher les abris"
+              />
+            </button>
           </div>
+          <div className="unTier"></div>
         </div>
       </section>
     </main>
