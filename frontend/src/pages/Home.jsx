@@ -26,6 +26,7 @@ import { cities } from "../assets/variables/cities"
 import { filters } from "../assets/variables/filters"
 import { fshelters } from "../assets/variables/fshelters"
 import building from "../assets/images/building.png"
+import BottomInfoPanel from "../components/BottomInfoPanel"
 
 export default function Home() {
   const {
@@ -292,6 +293,9 @@ export default function Home() {
           </button>
         </div>
       </section>
+      <div className="bottomPanel">
+        <BottomInfoPanel />
+      </div>
     </main>
   )
 }
