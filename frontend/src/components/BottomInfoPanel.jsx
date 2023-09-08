@@ -5,6 +5,7 @@ import "./BottomInfoPanel.scss"
 import {
   citiesFrance,
   sentencesBFMTV,
+  ending,
 } from "../assets/variables/utilityBottomPanel"
 
 const BottomInfoPanel = () => {
@@ -17,29 +18,32 @@ const BottomInfoPanel = () => {
     const getRandomIndexC = () =>
       Math.floor(Math.random() * citiesFrance.length)
 
+    const getRandomIndexE = () => Math.floor(Math.random() * ending.length)
+
     const addRandomSentence = () => {
       const newIndexS = getRandomIndexS()
       const newIndexC = getRandomIndexC()
+      const newIndexE = getRandomIndexE()
 
       setSentenceBFM((prevSentence) => [
         ...prevSentence,
         {
           sentence: sentencesBFMTV[newIndexS].event,
           city: citiesFrance[newIndexC].city,
+          end: ending[newIndexE].quote,
         },
       ])
       // Supprimer une phrase après un délai
-      const removeTimeout = Math.floor(Math.random() * 60000)
       setTimeout(() => {
         setSentenceBFM((prevSentence) => prevSentence.slice(1))
-      }, removeTimeout)
+      }, 60000)
     }
 
     // Ajouter une phrase dès le début
     addRandomSentence()
 
     // Ajouter une nouvelle phrase toutes les x millisecondes
-    const intervalId = setInterval(addRandomSentence, 20000)
+    const intervalId = setInterval(addRandomSentence, 30000)
 
     // Nettoyer l'intervalle lorsque le composant est démonté
     return () => clearInterval(intervalId)
@@ -55,12 +59,11 @@ const BottomInfoPanel = () => {
   return (
     <>
       <div className="pannelInfos">
-        <span className="reline"></span>
         <div className="scrollingText">
           <p>
             {sentenceBFM.map((item, index) => (
               <span key={index}>
-                {item.sentence} {item.city}
+                {item.sentence} {item.city} {item.end}
                 {index < sentenceBFM.length - 1 && " | "}
               </span>
             ))}

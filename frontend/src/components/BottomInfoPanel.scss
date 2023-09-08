@@ -14,34 +14,32 @@
   .scrollingText {
     display: inline-block; 
     // flex-direction: row;
-    // animation: scrollText steps(1, end) infinite; 
-    animation: scrollText 10s linear infinite; 
+    animation: scrollText 30s linear infinite; 
     // animation: scrollText linear infinite;  // Pour test
 
     p {
       font-size: 1.5em;
-      // font-size: 0.5em;  // Pour test
     }
 
   }
 }
 
-// @keyframes scrollText {
-//   0% {
-//     // transform: translateX(175%); /* Démarrez le texte en dehors de la bannière à droite */
-//     transform: translateX(100%);
-//   }
-//   100% {
-//     // transform: translateX(-150%); /* Faites défiler le texte jusqu'à l'extérieur de la bannière à gauche */
-//     transform: translateX(-100%);
-//   }
-// }
-
 @keyframes scrollText {
   0% {
-    transform: translate3d(0,0,0);      /* position initiale à droite */
+    // transform: translateX(175%); /* Démarrez le texte en dehors de la bannière à droite */
+    transform: translateX(100%);
   }
   100% {
-    transform: translate3d(-100%,0,0);  /* position finale à gauche */
+    // transform: translateX(-150%); /* Faites défiler le texte jusqu'à l'extérieur de la bannière à gauche */
+    transform: translateX(-100%);
   }
 }
+
+// @keyframes scrollText {
+//   0% {
+//     transform: translate3d(100%,0,0);   /* position initiale à droite */
+//   }
+//   100% {
+//     transform: translate3d(-100%,0,0);  /* position finale à gauche */
+//   }
+// }

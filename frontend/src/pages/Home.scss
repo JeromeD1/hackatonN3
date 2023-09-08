@@ -35,7 +35,7 @@
 
   .section-filterEvent {
     position: fixed;
-    bottom: 50px;
+    bottom: 11vh;
     left: 10%;
     z-index: 2;
     width: 80%;
@@ -61,4 +61,9 @@
       }
     }
   }
+
+  // .bottomPanel{
+  //   // position: absolute;
+  //   // bottom: 0;
+  // }
 }
