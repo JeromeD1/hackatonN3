@@ -1,6 +1,6 @@
 .pannelInfos {
   width: 100%;
-  height: 10vh; // A modifier lors de l'integration !!!!!!!
+  height: 40px; // A modifier lors de l'integration !!!!!!!
   display: flex;
   align-items: center;
   overflow: hidden; /* Masque le contenu qui dépasse la largeur de la bannière */
@@ -9,13 +9,10 @@
   position: absolute;
   bottom: 0;
   border-top: 5px solid red;
-  // border-top: 5px ridge  yellow ;
   
   .scrollingText {
     display: inline-block; 
-    // flex-direction: row;
     animation: scrollText 30s linear infinite; 
-    // animation: scrollText linear infinite;  // Pour test
 
     p {
       font-size: 1.5em;
@@ -34,12 +31,3 @@
     transform: translateX(-100%);
   }
 }
-
-// @keyframes scrollText {
-//   0% {
-//     transform: translate3d(100%,0,0);   /* position initiale à droite */
-//   }
-//   100% {
-//     transform: translate3d(-100%,0,0);  /* position finale à gauche */
-//   }
-// }
