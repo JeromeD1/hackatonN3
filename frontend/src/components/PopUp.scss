@@ -1,3 +1,12 @@
+$blueColor: #77abdc;
+$yellowColor: #f8e7a2;
+
+@font-face {
+  font-family: "Fallout";
+  // src: url(../assets/font/Overseer_Italic.otf) format("truetype");
+  src: url(../assets/font/Overseer_Bold_Italic.otf) format("truetype");
+}
+
 .modal-wrapper {
   position: fixed;
   top: 0;
@@ -21,7 +30,9 @@
 
 h2 {
   font-size: 50px;
-  margin: 10px;
+  margin: 25px;
+  font-family: "Fallout", Georgia;
+  color: $yellowColor;
 }
 
 .modal-content {

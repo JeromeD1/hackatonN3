@@ -1,4 +1,11 @@
+$blueColor: #77abdc;
 $yellowColor: #f8e7a2;
+
+@font-face {
+  font-family: "Fallout";
+  // src: url(../assets/font/Overseer_Italic.otf) format("truetype");
+  src: url(../assets/font/Overseer_Bold_Italic.otf) format("truetype");
+}
 
 .navBar {
   height: 95px;
@@ -37,8 +44,9 @@ $yellowColor: #f8e7a2;
       align-items: center;
       justify-content: center;
       margin-left: 430px;
+
       p {
-        font-family: "Times New Roman", Times, serif;
+        font-family: "Fallout", Georgia;
         font-size: 30px;
         color: $yellowColor;
       }
@@ -65,5 +73,20 @@ $yellowColor: #f8e7a2;
         width: 60px;
       }
     }
+    .cloche-icon img {
+      animation: clocheShake 1s infinite; /* Adjust time as needed */
+    }
+  }
+}
+
+@keyframes clocheShake {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
   }
 }
