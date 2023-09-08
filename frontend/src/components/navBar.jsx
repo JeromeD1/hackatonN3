@@ -5,7 +5,6 @@ import chaiseRoulante from "../assets/chaiseRoulante.png"
 import oreille from "../assets/oreille.png"
 import teteEclaire from "../assets/teteEclaire.png"
 import cloche from "../assets/cloche.png"
-import interrogation from "../assets/images/interrogation.png"
 import MyContext from "./MyContext"
 import { useContext } from "react"
 import { shelters } from "../assets/variables/shelters"
@@ -157,9 +156,6 @@ function NavBar({ filtersEvent, setFiltersShelter, FiltersShelter }) {
             alt="maladie mentale"
             title="maladie mentale"
           />
-        </li>
-        <li className="interrogation-icon">
-          <img src={interrogation} alt="aide" title="alertes" />
         </li>
         <li className="cloche-icon">
           <img src={cloche} alt="alertes" title="alertes" />
