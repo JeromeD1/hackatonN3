@@ -40,7 +40,7 @@ const iconBunker = L.icon({
 
 const iconMetro = L.icon({
   iconUrl: metro,
-  iconSize: [30, 45],
+  iconSize: [30, 30],
 })
 
 const getRandomInRange = (min, max) => {
