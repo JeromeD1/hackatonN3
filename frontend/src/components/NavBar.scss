@@ -59,5 +59,20 @@ $yellowColor: #f8e7a2;
         width: 20%;
       }
     }
+    .cloche-icon img {
+      animation: clocheShake 1s infinite; /* Adjust time as needed */
+    }
+  }
+}
+
+@keyframes clocheShake {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
   }
 }
